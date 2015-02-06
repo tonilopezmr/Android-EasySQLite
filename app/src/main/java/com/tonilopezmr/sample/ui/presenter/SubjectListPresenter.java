@@ -13,7 +13,6 @@ import com.tonilopezmr.sample.executor.ThreadExecutor;
 import com.tonilopezmr.sample.ui.view.View;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModelImp;
-import com.tonilopezmr.sample.ui.viewmodel.mapper.SubjectModelDataMapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
