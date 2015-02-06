@@ -4,12 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.tonilopezmr.sample.SQLiteTransformer;
-import com.tonilopezmr.sample.domain.Subject;
+import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
 
 /**
  * Created by toni on 05/02/15.
  */
-public class SubjectTransformer implements SQLiteTransformer<Subject>{
+public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 
     public static final String ID = "id";
     public static final String NAME = "name";
@@ -18,14 +18,14 @@ public class SubjectTransformer implements SQLiteTransformer<Subject>{
     public static final String[] FIELDS = {ID, NAME};
 
     @Override
-    public Subject transform(Cursor cursor) throws Exception {
+    public SubjectEntity transform(Cursor cursor) throws Exception {
         int id = cursor.getInt(0);
         String name = cursor.getString(1);
-        return new Subject(id, name);
+        return new SubjectEntity(id, name);
     }
 
     @Override
-    public ContentValues transform(Subject dto) throws Exception {
+    public ContentValues transform(SubjectEntity dto) throws Exception {
         ContentValues values = new ContentValues();
         values.put(ID, dto.getId());
         values.put(NAME, dto.getName());
@@ -34,12 +34,12 @@ public class SubjectTransformer implements SQLiteTransformer<Subject>{
     }
 
     @Override
-    public String getWhereClause(Subject dto) throws Exception {
+    public String getWhereClause(SubjectEntity dto) throws Exception {
         return  ID+"="+dto.getId();
     }
 
     @Override
-    public Subject setId(Subject dto, Object id) throws Exception {
+    public SubjectEntity setId(SubjectEntity dto, Object id) throws Exception {
         dto.setId((Integer.valueOf(dto.toString())));
         return dto;
     }

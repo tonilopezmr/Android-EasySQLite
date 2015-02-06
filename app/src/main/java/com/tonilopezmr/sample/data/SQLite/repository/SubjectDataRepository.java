@@ -4,9 +4,13 @@ import android.content.Context;
 
 import com.tonilopezmr.sample.data.SQLite.SQLiteManager;
 import com.tonilopezmr.sample.data.SQLite.dao.SubjectDAO;
+import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
+import com.tonilopezmr.sample.data.SQLite.entity.mapper.SubjectEntityMapper;
+import com.tonilopezmr.sample.domain.Subject;
 import com.tonilopezmr.sample.domain.exception.SubjectException;
 import com.tonilopezmr.sample.domain.repository.SubjectRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
@@ -16,20 +20,31 @@ import java.util.Random;
 public class SubjectDataRepository implements SubjectRepository {
 
     private SubjectDAO subjectDAO;
-
+    private SubjectEntityMapper mapper;
     public SubjectDataRepository(Context context) {
         subjectDAO = new SubjectDAO(SQLiteManager.getDataBase(context));
+        mapper = new SubjectEntityMapper();
     }
 
     @Override
     public void getSubjectsCollection(SubjectCallback callback) throws SubjectException{
         try {
             randomError();
-            callback.onSubjectListLoader(subjectDAO.readAll());
+            callback.onSubjectListLoader(createCollecitonSubject(subjectDAO.readAll()));
         } catch (Exception e) {
             e.printStackTrace();
             callback.onError(new SubjectException(e));
         }
+    }
+
+    private Collection<Subject> createCollecitonSubject(Collection<SubjectEntity> entityCollection){
+        Collection<Subject> subjects = new ArrayList<>();
+
+        for (SubjectEntity subjectEntity : entityCollection){
+            subjects.add(mapper.mapToSubject(subjectEntity));
+        }
+
+        return subjects;
     }
 
     public void randomError(){

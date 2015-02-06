@@ -7,8 +7,8 @@ import java.util.Collection;
  */
 public class Subject {
 
-    int id;
-    String name;
+    private int id;
+    private String name;
 
     public Subject(int id, String name) {
         this.id = id;
