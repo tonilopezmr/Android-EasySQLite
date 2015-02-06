@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.tonilopezmr.sample.data.SQLite.repository.SubjectDataRepository;
 import com.tonilopezmr.sample.domain.Subject;
+import com.tonilopezmr.sample.domain.exception.SubjectException;
 import com.tonilopezmr.sample.domain.iteractor.GetSubjectListUseCase;
 import com.tonilopezmr.sample.domain.iteractor.GetSubjectListUseCaseImp;
 import com.tonilopezmr.sample.executor.MainThread;
@@ -28,7 +29,8 @@ public class SubjectListPresenter implements Presenter {
 
     public SubjectListPresenter(View view) {
         this.view = view;
-//        this.subjectListUseCase = new GetSubjectListUseCaseImp(new SubjectDataRepository(view.getContext()));
+
+        //with dragger
         ThreadExecutor executor = new ThreadExecutor();
         MainThread mainThread = new MainThreadImp();
 
@@ -46,8 +48,8 @@ public class SubjectListPresenter implements Presenter {
             }
 
             @Override
-            public void onError() {
-                view.showMessage("¡ERROR!"); //For example
+            public void onError(SubjectException exception) {
+                view.showMessage(exception.getMessage()); //For example
                 view.hideProgress();
                 view.showError();
                 Log.i(getClass().toString(), "¡¡Show error!!");

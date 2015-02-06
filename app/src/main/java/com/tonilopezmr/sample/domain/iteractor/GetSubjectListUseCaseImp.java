@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.tonilopezmr.sample.domain.Subject;
+import com.tonilopezmr.sample.domain.exception.SubjectException;
 import com.tonilopezmr.sample.domain.repository.SubjectRepository;
 import com.tonilopezmr.sample.executor.Executor;
 import com.tonilopezmr.sample.executor.MainThread;
@@ -62,11 +63,11 @@ public class GetSubjectListUseCaseImp implements GetSubjectListUseCase{
             }
 
             @Override
-            public void onError() {
+            public void onError(final SubjectException exception) {
                 mainThread.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onError();
+                        callback.onError(exception);
                         Log.i(getClass().toString(), "Error!");
                     }
                 });

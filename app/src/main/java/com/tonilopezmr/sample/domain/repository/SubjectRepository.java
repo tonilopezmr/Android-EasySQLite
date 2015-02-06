@@ -1,6 +1,8 @@
 package com.tonilopezmr.sample.domain.repository;
 
 import com.tonilopezmr.sample.domain.Subject;
+import com.tonilopezmr.sample.domain.exception.SubjectException;
+
 import java.util.Collection;
 
 /**
@@ -10,8 +12,8 @@ public interface SubjectRepository {
 
     interface SubjectCallback{
         void onSubjectListLoader(Collection<Subject> subjects);
-        void onError();
+        void onError(SubjectException subjectException);
     }
 
-    void getSubjectsCollection(SubjectCallback subjectCallback);
+    void getSubjectsCollection(SubjectCallback subjectCallback) throws SubjectException;
 }

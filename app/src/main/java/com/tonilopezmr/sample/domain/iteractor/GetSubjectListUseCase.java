@@ -1,6 +1,7 @@
 package com.tonilopezmr.sample.domain.iteractor;
 
 import com.tonilopezmr.sample.domain.Subject;
+import com.tonilopezmr.sample.domain.exception.SubjectException;
 
 import java.util.Collection;
 
@@ -11,7 +12,7 @@ public interface GetSubjectListUseCase extends Interactor {
 
     interface Callback{
         void onSubjectListLoaded(Collection<Subject> subjects);
-        void onError();
+        void onError(SubjectException exception);
     }
 
     public void execute(final Callback callback);

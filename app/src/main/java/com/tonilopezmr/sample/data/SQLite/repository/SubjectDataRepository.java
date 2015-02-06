@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.tonilopezmr.sample.data.SQLite.SQLiteManager;
 import com.tonilopezmr.sample.data.SQLite.dao.SubjectDAO;
+import com.tonilopezmr.sample.domain.exception.SubjectException;
 import com.tonilopezmr.sample.domain.repository.SubjectRepository;
 
 import java.util.Collection;
@@ -21,13 +22,13 @@ public class SubjectDataRepository implements SubjectRepository {
     }
 
     @Override
-    public void getSubjectsCollection(SubjectCallback callback) {
+    public void getSubjectsCollection(SubjectCallback callback) throws SubjectException{
         try {
             randomError();
             callback.onSubjectListLoader(subjectDAO.readAll());
         } catch (Exception e) {
             e.printStackTrace();
-            callback.onError();
+            callback.onError(new SubjectException(e));
         }
     }
 
