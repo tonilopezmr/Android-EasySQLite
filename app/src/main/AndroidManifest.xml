@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <application
+        android:name=".di.SubjectsApplication"
         android:icon="@drawable/ic_launcher">
         <activity
             android:name=".ui.MainActivity"

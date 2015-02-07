@@ -6,6 +6,8 @@ import com.tonilopezmr.sample.domain.repository.SubjectRepository;
 import com.tonilopezmr.sample.executor.Executor;
 import com.tonilopezmr.sample.executor.MainThread;
 
+import javax.inject.Inject;
+
 /**
  * Created by toni on 07/02/15.
  */

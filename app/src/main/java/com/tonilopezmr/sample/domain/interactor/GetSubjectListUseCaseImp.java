@@ -10,6 +10,8 @@ import com.tonilopezmr.sample.executor.MainThread;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+
 
 /**
  * Created by toni on 03/02/15.

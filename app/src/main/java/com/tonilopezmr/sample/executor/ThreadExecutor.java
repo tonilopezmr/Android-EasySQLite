@@ -7,6 +7,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 /**
  * Created by toni on 05/02/15.
  */
@@ -20,7 +22,6 @@ public class ThreadExecutor implements Executor{
 
     private ThreadPoolExecutor threadPoolexecutor;
 
-    //Cuando ponga el inject hacer como pedro (mirar su codigo)
     public ThreadExecutor() {
         int corePoolSize = CORE_POOL_SIZE;
         int maxPoolSize = MAX_POOL_SIZE;

@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.tonilopezmr.sample.R;
+import com.tonilopezmr.sample.di.BaseActivity;
+import com.tonilopezmr.sample.di.SubjectsApplication;
 import com.tonilopezmr.sample.ui.presenter.MainPresenter;
 import com.tonilopezmr.sample.ui.presenter.SubjectListPresenterImp;
 import com.tonilopezmr.sample.ui.view.SubjectListView;
@@ -27,7 +29,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends Activity implements SubjectListView {
+public class MainActivity extends BaseActivity implements SubjectListView {
 
 
     MainPresenter presenter;
@@ -47,7 +49,6 @@ public class MainActivity extends Activity implements SubjectListView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.inject(this);
 
 //        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+import javax.inject.Inject;
+
 /**
  * Created by toni on 05/02/15.
  */
@@ -23,10 +25,10 @@ public class SubjectDataRepository implements SubjectRepository {
     private SubjectDAO subjectDAO;
     private SubjectMapper<SubjectEntity> mapper;
 
-    public SubjectDataRepository(Context context) {
+    public SubjectDataRepository(Context context, SubjectMapper mapper) {
         subjectDAO = new SubjectDAO(SQLiteManager.getDataBase(context));
-//        this.mapper = mapper;
-        mapper = new SubjectEntityMapper();
+        this.mapper = mapper;
+//        mapper = new SubjectEntityMapper();
     }
 
     @Override
