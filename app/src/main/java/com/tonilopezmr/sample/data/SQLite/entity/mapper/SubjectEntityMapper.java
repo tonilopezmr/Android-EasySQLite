@@ -2,11 +2,12 @@ package com.tonilopezmr.sample.data.SQLite.entity.mapper;
 
 import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
 import com.tonilopezmr.sample.domain.Subject;
+import com.tonilopezmr.sample.domain.mapper.SubjectMapper;
 
 /**
  * Created by toni on 06/02/15.
  */
-public class SubjectEntityMapper {
+public class SubjectEntityMapper implements SubjectMapper<SubjectEntity>{
 
     public SubjectEntityMapper() {
     }

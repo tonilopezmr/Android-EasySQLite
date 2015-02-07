@@ -1,6 +1,6 @@
 package com.tonilopezmr.sample.executor;
 
-import com.tonilopezmr.sample.domain.iteractor.Interactor;
+import com.tonilopezmr.sample.domain.interactor.Interactor;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

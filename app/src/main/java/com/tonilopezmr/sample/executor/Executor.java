@@ -1,6 +1,6 @@
 package com.tonilopezmr.sample.executor;
 
-import com.tonilopezmr.sample.domain.iteractor.Interactor;
+import com.tonilopezmr.sample.domain.interactor.Interactor;
 
 /**
  * Created by toni on 05/02/15.

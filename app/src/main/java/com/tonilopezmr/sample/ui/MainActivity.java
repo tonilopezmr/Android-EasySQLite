@@ -24,26 +24,40 @@ import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModelImp;
 import java.util.Collection;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class MainActivity extends Activity implements SubjectListView {
 
-    private RecyclerView recyclerView;
-    private ProgressBar progressBar;
-    private MainPresenter presenter;
-    private LinearLayout layoutError;
-    private MyRecyclerAdapter adapter;
+
+    MainPresenter presenter;
+
+    @InjectView(R.id.my_recycler_view)
+    RecyclerView recyclerView;
+    @InjectView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @InjectView(R.id.layout_error)
+    LinearLayout layoutError;
+    @InjectView(R.id.floating_button)
+    FloatingActionButton floatingButton;
+
+    MyRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        ButterKnife.inject(this);
+
+//        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         inicializeRecyclerView(recyclerView);
 
-        layoutError = (LinearLayout) findViewById(R.id.layout_error);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+//        layoutError = (LinearLayout) findViewById(R.id.layout_error);
+//        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         presenter = new SubjectListPresenterImp(this);
 
-        FloatingActionButton floatingButton = (FloatingActionButton)findViewById(R.id.floating_button);
+//        FloatingActionButton floatingButton = (FloatingActionButton)findViewById(R.id.floating_button);
         floatingButton.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
@@ -53,6 +67,13 @@ public class MainActivity extends Activity implements SubjectListView {
 
         presenter.onInit();
     }
+
+//    @Override
+//    protected List<Object> getModules() {
+//        List<Object> modules = new ArrayList<>();
+////        modules.add(new MainActivityModule(this));
+//        return modules;
+//    }
 
     private void inicializeRecyclerView(RecyclerView recyclerView){
         recyclerView.setHasFixedSize(true);

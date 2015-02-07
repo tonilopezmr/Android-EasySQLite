@@ -8,6 +8,7 @@ import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
 import com.tonilopezmr.sample.data.SQLite.entity.mapper.SubjectEntityMapper;
 import com.tonilopezmr.sample.domain.Subject;
 import com.tonilopezmr.sample.domain.exception.SubjectException;
+import com.tonilopezmr.sample.domain.mapper.SubjectMapper;
 import com.tonilopezmr.sample.domain.repository.SubjectRepository;
 
 import java.util.ArrayList;
@@ -20,10 +21,11 @@ import java.util.Random;
 public class SubjectDataRepository implements SubjectRepository {
 
     private SubjectDAO subjectDAO;
-    private SubjectEntityMapper mapper;
+    private SubjectMapper<SubjectEntity> mapper;
 
     public SubjectDataRepository(Context context) {
         subjectDAO = new SubjectDAO(SQLiteManager.getDataBase(context));
+//        this.mapper = mapper;
         mapper = new SubjectEntityMapper();
     }
 

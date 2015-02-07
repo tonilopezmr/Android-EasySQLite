@@ -12,6 +12,9 @@ import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by toni on 04/02/15.
  */
@@ -87,11 +90,14 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         public void onItemClick(View view, Model subject);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView nameSubjectViewModel;
+    public static class ViewHolder extends AbstracRecyclerViewHolder{
+
+        @InjectView(R.id.nameSubjectTextView)
+        TextView nameSubjectViewModel;
+
         public ViewHolder(final View itemView) {
             super(itemView);
-            nameSubjectViewModel = (TextView)itemView.findViewById(R.id.nameSubjectTextView);
+//            nameSubjectViewModel = (TextView)itemView.findViewById(R.id.nameSubjectTextView);
         }
     }
 

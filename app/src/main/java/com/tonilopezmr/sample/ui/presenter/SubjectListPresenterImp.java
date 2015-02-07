@@ -5,10 +5,10 @@ import android.util.Log;
 import com.tonilopezmr.sample.data.SQLite.repository.SubjectDataRepository;
 import com.tonilopezmr.sample.domain.Subject;
 import com.tonilopezmr.sample.domain.exception.SubjectException;
-import com.tonilopezmr.sample.domain.iteractor.CreateSubjectUseCase;
-import com.tonilopezmr.sample.domain.iteractor.CreateSubjectUseCaseImp;
-import com.tonilopezmr.sample.domain.iteractor.GetSubjectListUseCase;
-import com.tonilopezmr.sample.domain.iteractor.GetSubjectListUseCaseImp;
+import com.tonilopezmr.sample.domain.interactor.CreateSubjectUseCase;
+import com.tonilopezmr.sample.domain.interactor.CreateSubjectUseCaseImp;
+import com.tonilopezmr.sample.domain.interactor.GetSubjectListUseCase;
+import com.tonilopezmr.sample.domain.interactor.GetSubjectListUseCaseImp;
 import com.tonilopezmr.sample.executor.MainThread;
 import com.tonilopezmr.sample.executor.MainThreadImp;
 import com.tonilopezmr.sample.executor.ThreadExecutor;
@@ -40,6 +40,21 @@ public class SubjectListPresenterImp implements MainPresenter {
         this.subjectListUseCase = new GetSubjectListUseCaseImp(executor, mainThread, repository);
         this.createSubjectUseCase = new CreateSubjectUseCaseImp(executor, mainThread, repository);
     }
+
+//    public SubjectListPresenterImp(SubjectListView view, GetSubjectListUseCase subjectListUseCase, CreateSubjectUseCase createSubjectUseCase) {
+//        this.view = view;
+//
+//        //with dragger
+////        ThreadExecutor executor = new ThreadExecutor();
+////        MainThread mainThread = new MainThreadImp();
+//
+////        SubjectDataRepository repository = new SubjectDataRepository(view.getContext());
+//
+////        this.subjectListUseCase = new GetSubjectListUseCaseImp(executor, mainThread, repository);
+////        this.createSubjectUseCase = new CreateSubjectUseCaseImp(executor, mainThread, repository);
+//        this.subjectListUseCase = subjectListUseCase;
+//        this.createSubjectUseCase = createSubjectUseCase;
+//    }
 
     @Override
     public void onInit() {

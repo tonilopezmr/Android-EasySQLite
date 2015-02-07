@@ -1,4 +1,4 @@
-package com.tonilopezmr.sample.domain.iteractor;
+package com.tonilopezmr.sample.domain.interactor;
 
 import com.tonilopezmr.sample.domain.Subject;
 import com.tonilopezmr.sample.domain.exception.SubjectException;
