@@ -12,7 +12,7 @@ import android.util.Log;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     public final static String DATABASE_NAME = "com.tonilopezmr.sample.database";
-    public final static int SQLITE_VERSION = 3;
+    public final static int SQLITE_VERSION = 4;
 
 
     private final String SUBJECT_TABLE =

@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="error">Oops Random Generate Error!</string>
+    <string name="desc">desc</string>
 
 </resources>

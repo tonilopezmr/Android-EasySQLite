@@ -1,6 +1,7 @@
 package com.tonilopezmr.sample.data.mock;
 
 import com.tonilopezmr.sample.domain.Subject;
+import com.tonilopezmr.sample.domain.exception.SubjectException;
 import com.tonilopezmr.sample.domain.repository.SubjectRepository;
 
 import java.util.ArrayList;
@@ -32,7 +33,14 @@ public class MockSubjectRepository  implements SubjectRepository {
 
 
     @Override
-    public void getSubjectsCollection(SubjectCallback subjectCallback){
-        subjectCallback.onSubjectListLoader(generateSubjectCollection());
+    public void getSubjectsCollection(SubjectListCallback subjectListCallback){
+        subjectListCallback.onSubjectListLoader(generateSubjectCollection());
+    }
+
+    @Override
+    public void createSubject(Subject subject, SubjectCreateCallback callback) throws SubjectException {
+        subject.setId(10);
+        subject.setName("Create new Subject");
+        callback.onCreateSubject(subject);
     }
 }

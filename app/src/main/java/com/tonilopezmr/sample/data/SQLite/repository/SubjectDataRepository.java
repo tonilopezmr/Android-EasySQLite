@@ -21,16 +21,28 @@ public class SubjectDataRepository implements SubjectRepository {
 
     private SubjectDAO subjectDAO;
     private SubjectEntityMapper mapper;
+
     public SubjectDataRepository(Context context) {
         subjectDAO = new SubjectDAO(SQLiteManager.getDataBase(context));
         mapper = new SubjectEntityMapper();
     }
 
     @Override
-    public void getSubjectsCollection(SubjectCallback callback) throws SubjectException{
+    public void getSubjectsCollection(SubjectListCallback callback) throws SubjectException{
         try {
             randomError();
             callback.onSubjectListLoader(createCollecitonSubject(subjectDAO.readAll()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            callback.onError(new SubjectException(e));
+        }
+    }
+
+    @Override
+    public void createSubject(Subject subject, SubjectCreateCallback callback) throws SubjectException {
+        try {
+            SubjectEntity subjectEntity = mapper.mapToSubjectEntity(subject);
+            callback.onCreateSubject(mapper.mapToSubject(subjectDAO.create(subjectEntity)));
         } catch (Exception e) {
             e.printStackTrace();
             callback.onError(new SubjectException(e));
@@ -50,7 +62,7 @@ public class SubjectDataRepository implements SubjectRepository {
     public void randomError(){
         Random random = new Random();
 
-        Object[] objects = {3,4,"as",5,4,"SDF", 4, "sdf"};
+        Object[] objects = {3,4,"Oops :(",5,4,"Error :D", 4, 8};
         int i = Integer.valueOf(objects[random.nextInt(7+1)].toString());
     }
 }

@@ -27,7 +27,7 @@ public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
     @Override
     public ContentValues transform(SubjectEntity dto) throws Exception {
         ContentValues values = new ContentValues();
-        values.put(ID, dto.getId());
+//        values.put(ID, dto.getId());   it is not necessary, autoincrement!
         values.put(NAME, dto.getName());
 
         return values;
@@ -40,7 +40,7 @@ public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 
     @Override
     public SubjectEntity setId(SubjectEntity dto, Object id) throws Exception {
-        dto.setId((Integer.valueOf(dto.toString())));
+        dto.setId((Integer.valueOf(id.toString())));
         return dto;
     }
 

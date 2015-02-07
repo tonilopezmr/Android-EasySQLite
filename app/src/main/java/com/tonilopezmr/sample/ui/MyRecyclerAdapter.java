@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.tonilopezmr.sample.R;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     private List<SubjectViewModel> items;
     private int itemLayout;
     private OnRecyclerViewItemClickListener listener;
+
+    public MyRecyclerAdapter(int itemLayout) {
+        this.itemLayout = itemLayout;
+        this.items = new ArrayList<>();
+    }
 
     public MyRecyclerAdapter(List<SubjectViewModel> items, int itemLayout) {
         this.items = items;
@@ -48,9 +54,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         return items.size();
     }
 
-    public void add(SubjectViewModel item, int position) {
+    public void add(SubjectViewModel item) {
+        int position = items.size();
         items.add(position, item);
         notifyItemInserted(position);
+    }
+
+    public void add(List<SubjectViewModel> models) {
+        this.items.addAll(models);
+        notifyDataSetChanged();
     }
 
     public void remove(SubjectViewModel item) {

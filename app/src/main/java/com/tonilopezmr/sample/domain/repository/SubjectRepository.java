@@ -10,10 +10,16 @@ import java.util.Collection;
  */
 public interface SubjectRepository {
 
-    interface SubjectCallback{
+    interface SubjectListCallback {
         void onSubjectListLoader(Collection<Subject> subjects);
         void onError(SubjectException subjectException);
     }
 
-    void getSubjectsCollection(SubjectCallback subjectCallback) throws SubjectException;
+    interface SubjectCreateCallback {
+        void onCreateSubject(Subject subject);
+        void onError(SubjectException subjectException);
+    }
+
+    void getSubjectsCollection(SubjectListCallback callback) throws SubjectException;
+    void createSubject(Subject subject, SubjectCreateCallback callback) throws SubjectException;
 }

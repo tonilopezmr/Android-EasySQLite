@@ -11,15 +11,5 @@ import java.util.Collection;
  */
 public interface View {
 
-    public void showError();
-
-    public void showProgress();
-
-    public void hideProgress();
-
-    public void showMessage(String message);
-
-    public void showSubjects(Collection<SubjectViewModel> subjects);
-
     public Context getContext();
 }

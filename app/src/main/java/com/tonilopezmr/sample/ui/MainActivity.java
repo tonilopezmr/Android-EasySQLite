@@ -8,40 +8,65 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.tonilopezmr.sample.R;
-import com.tonilopezmr.sample.ui.presenter.Presenter;
-import com.tonilopezmr.sample.ui.presenter.SubjectListPresenter;
-import com.tonilopezmr.sample.ui.view.View;
+import com.tonilopezmr.sample.ui.presenter.MainPresenter;
+import com.tonilopezmr.sample.ui.presenter.SubjectListPresenterImp;
+import com.tonilopezmr.sample.ui.view.SubjectListView;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
+import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModelImp;
 
 import java.util.Collection;
 import java.util.List;
 
-public class MainActivity extends Activity implements View {
+public class MainActivity extends Activity implements SubjectListView {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private Presenter presenter;
+    private MainPresenter presenter;
     private LinearLayout layoutError;
+    private MyRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        inicializeRecyclerView(recyclerView);
+
+        layoutError = (LinearLayout) findViewById(R.id.layout_error);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        presenter = new SubjectListPresenterImp(this);
+
+        FloatingActionButton floatingButton = (FloatingActionButton)findViewById(R.id.floating_button);
+        floatingButton.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                presenter.onFloatingButtonClick(new SubjectViewModelImp("New Subject"));
+            }
+        });
+
+        presenter.onInit();
+    }
+
+    private void inicializeRecyclerView(RecyclerView recyclerView){
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        layoutError = (LinearLayout) findViewById(R.id.layout_error);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        presenter = new SubjectListPresenter(this);
-
-        presenter.onInit();
+        adapter = new MyRecyclerAdapter(R.layout.item_list);
+        adapter.setOnItemClickListener(new MyRecyclerAdapter.OnRecyclerViewItemClickListener<SubjectViewModel>() {
+            @Override
+            public void onItemClick(android.view.View view, SubjectViewModel subject) {
+                presenter.onClickItem(subject.getName());
+            }
+        });
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -76,19 +101,32 @@ public class MainActivity extends Activity implements View {
     }
 
     @Override
-    public void showError() {
-        layoutError.setVisibility(android.view.View.VISIBLE);
+    public boolean isShowLayoutError() {
+        return layoutError.getVisibility() == View.VISIBLE;
+    }
+
+    @Override
+    public void hideLayoutError() {
+        layoutError.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showLayoutError() {
+        recyclerView.setVisibility(View.INVISIBLE);
+        layoutError.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(android.view.View.VISIBLE);
-        recyclerView.setVisibility(android.view.View.INVISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        layoutError.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(android.view.View.GONE);
+        progressBar.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(android.view.View.VISIBLE);
     }
 
@@ -99,18 +137,21 @@ public class MainActivity extends Activity implements View {
 
     @Override
     public void showSubjects(Collection<SubjectViewModel> subjects) {
-        MyRecyclerAdapter adapter = new MyRecyclerAdapter((List<SubjectViewModel>)subjects, R.layout.item_list);
-        adapter.setOnItemClickListener(new MyRecyclerAdapter.OnRecyclerViewItemClickListener<SubjectViewModel>() {
-            @Override
-            public void onItemClick(android.view.View view, SubjectViewModel subject) {
-                presenter.onClickItem(subject.getName());
-            }
-        });
-        recyclerView.setAdapter(adapter);
+        adapter.add((List<SubjectViewModel>) subjects);
     }
 
     @Override
     public Context getContext() {
         return getApplicationContext();
+    }
+
+    @Override
+    public void add(SubjectViewModel subjectModel) {
+        adapter.add(subjectModel);
+    }
+
+    @Override
+    public void remove(SubjectViewModel subjectModel) {
+        adapter.remove(subjectModel);
     }
 }

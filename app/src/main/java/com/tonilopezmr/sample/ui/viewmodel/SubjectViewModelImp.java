@@ -7,18 +7,24 @@ import com.tonilopezmr.sample.domain.Subject;
  */
 public class SubjectViewModelImp implements SubjectViewModel {
 
-    Subject subject;
+    private int id;
+    private String name;
+
+    public SubjectViewModelImp(String name) {
+        this.name = name;
+    }
 
     public SubjectViewModelImp(Subject subject) {
-        this.subject = subject;
+        this.id = subject.getId();
+        this.name = subject.getName();
     }
 
     public int getId(){
-        return subject.getId();
+        return this.id;
     }
 
     public String getName(){
-        return subject.getName();
+        return this.name;
     }
 
 }

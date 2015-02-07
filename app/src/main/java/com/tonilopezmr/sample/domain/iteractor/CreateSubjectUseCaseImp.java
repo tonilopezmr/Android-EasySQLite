@@ -1,47 +1,42 @@
 package com.tonilopezmr.sample.domain.iteractor;
 
-import android.util.Log;
-
 import com.tonilopezmr.sample.domain.Subject;
 import com.tonilopezmr.sample.domain.exception.SubjectException;
 import com.tonilopezmr.sample.domain.repository.SubjectRepository;
 import com.tonilopezmr.sample.executor.Executor;
 import com.tonilopezmr.sample.executor.MainThread;
 
-import java.util.Collection;
-
-
 /**
- * Created by toni on 03/02/15.
+ * Created by toni on 07/02/15.
  */
-public class GetSubjectListUseCaseImp implements GetSubjectListUseCase{
+public class CreateSubjectUseCaseImp implements CreateSubjectUseCase {
 
-
-    private SubjectRepository subjectRepository;
     private Executor executor;
     private MainThread mainThread;
+    private SubjectRepository subjectRepository;
 
     private Callback callback;
+    private Subject subject;
 
-    public GetSubjectListUseCaseImp(Executor executor, MainThread mainThread, SubjectRepository subjectRepository) {
-        this.subjectRepository = subjectRepository;
+    public CreateSubjectUseCaseImp(Executor executor, MainThread mainThread, SubjectRepository subjectRepository) {
         this.executor = executor;
         this.mainThread = mainThread;
+        this.subjectRepository = subjectRepository;
     }
 
-    //aqui puede tirarse el rato que quiera porque esta en un hilo
-    //De la implementacion de GetSubjectListUseCase
     @Override
-    public void execute(final Callback callback) {
-        if (callback == null) {
+    public void execute(Subject subject, final Callback callback) {
+        if (callback == null){
             throw new IllegalArgumentException("Callback parameter can't be null");
         }
 
         this.callback = callback;
+        this.subject = subject;
         this.executor.run(this);
     }
 
-    //Interactor User case
+
+    //Interactor Use case
     @Override
     public void run() {
         try {
@@ -50,28 +45,26 @@ public class GetSubjectListUseCaseImp implements GetSubjectListUseCase{
             e.printStackTrace();
         }
 
-        subjectRepository.getSubjectsCollection(new SubjectRepository.SubjectListCallback() {
+        subjectRepository.createSubject(subject, new SubjectRepository.SubjectCreateCallback() {
             @Override
-            public void onSubjectListLoader(final Collection<Subject> subjects) {
+            public void onCreateSubject(final Subject subject) {
                 mainThread.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onSubjectListLoaded(subjects);
+                        callback.onCreateSubject(subject);
                     }
                 });
             }
 
             @Override
-            public void onError(final SubjectException exception) {
+            public void onError(final SubjectException subjectException) {
                 mainThread.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onError(exception);
-                        Log.i(getClass().toString(), "Error!");
+                        callback.onError(subjectException);
                     }
                 });
             }
         });
     }
-
 }
