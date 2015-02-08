@@ -7,8 +7,8 @@ Use easily the database SQLite on android using the DAO and transformer design p
 
 ##Import with Gradle:
 
-###1. Create the object Transformer
-
+####1. Create the object Transformer
+-----------
 
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 
