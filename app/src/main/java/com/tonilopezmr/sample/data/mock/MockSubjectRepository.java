@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by toni on 04/02/15.
+ * Mock repository for testing.
+ *
+ * @author Toni
  */
 public class MockSubjectRepository  implements SubjectRepository {
 
@@ -38,9 +40,14 @@ public class MockSubjectRepository  implements SubjectRepository {
     }
 
     @Override
-    public void createSubject(Subject subject, SubjectCreateCallback callback) throws SubjectException {
+    public void createSubject(Subject subject, SubjectUseCase callback) throws SubjectException {
         subject.setId(10);
         subject.setName("Create new Subject");
-        callback.onCreateSubject(subject);
+        callback.onMissionAccomplished(subject);
+    }
+
+    @Override
+    public void deleteSubject(Subject subject, SubjectUseCase callback) throws SubjectException {
+        callback.onMissionAccomplished(subject);
     }
 }

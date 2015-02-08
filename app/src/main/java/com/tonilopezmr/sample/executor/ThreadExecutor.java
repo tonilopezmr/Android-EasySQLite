@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
- * Created by toni on 05/02/15.
+ * @author toni.
  */
 public class ThreadExecutor implements Executor{
 

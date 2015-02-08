@@ -7,7 +7,8 @@ import com.tonilopezmr.sample.SQLiteTransformer;
 import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
 
 /**
- * Created by toni on 05/02/15.
+ *
+ * @author Toni
  */
 public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 

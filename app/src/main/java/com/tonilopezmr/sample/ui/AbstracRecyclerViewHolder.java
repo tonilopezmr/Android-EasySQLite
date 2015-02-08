@@ -6,7 +6,7 @@ import android.view.View;
 import butterknife.ButterKnife;
 
 /**
- * Created by toni on 07/02/15.
+ * @author toni.
  */
 public abstract class AbstracRecyclerViewHolder extends RecyclerView.ViewHolder {
 

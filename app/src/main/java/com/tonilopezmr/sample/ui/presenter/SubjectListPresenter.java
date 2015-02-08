@@ -1,9 +1,12 @@
 package com.tonilopezmr.sample.ui.presenter;
 
+import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
+
 /**
- * Created by toni on 07/02/15.
+ * @author toni.
  */
 public interface SubjectListPresenter extends Presenter{
 
-    public void onClickItem(String name);
+    public void onClickItem(SubjectViewModel SubjectModel);
+    public void onLongItemClick(SubjectViewModel subjectModel);
 }

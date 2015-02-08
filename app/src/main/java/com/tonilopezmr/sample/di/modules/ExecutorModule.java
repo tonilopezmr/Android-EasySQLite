@@ -11,7 +11,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by toni on 07/02/15.
+ *
+ * @author Toni
  */
 @Module(
         complete = false,

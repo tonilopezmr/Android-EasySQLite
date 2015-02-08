@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 
 /**
- * Created by toni on 03/02/15.
+ * @author toni.
  */
 public class GetSubjectListUseCaseImp implements GetSubjectListUseCase{
 

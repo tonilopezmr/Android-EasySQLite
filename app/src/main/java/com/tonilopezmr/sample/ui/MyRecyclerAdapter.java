@@ -12,17 +12,17 @@ import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
- * Created by toni on 04/02/15.
+ * @author toni.
  */
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> implements View.OnClickListener{
+public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> implements View.OnClickListener, View.OnLongClickListener{
 
     private List<SubjectViewModel> items;
     private int itemLayout;
-    private OnRecyclerViewItemClickListener listener;
+    private OnRecyclerViewItemClickListener clickListener;
+    private OnRecyclerViewItemLongClickListener longClickListener;
 
     public MyRecyclerAdapter(int itemLayout) {
         this.itemLayout = itemLayout;
@@ -38,6 +38,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, false);
         view.setOnClickListener(this);
+        view.setOnLongClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -70,20 +71,37 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
     public void remove(SubjectViewModel item) {
         int position = items.indexOf(item);
-        items.remove(position);
+        items.remove(item);
         notifyItemRemoved(position);
     }
 
+    public void setOnLongClickListener(OnRecyclerViewItemLongClickListener<SubjectViewModel> listener){
+        this.longClickListener = listener;
+    }
+
     public void setOnItemClickListener(OnRecyclerViewItemClickListener<SubjectViewModel> listener){
-        this.listener = listener;
+        this.clickListener = listener;
     }
 
     @Override
     public void onClick(View view) {
-        if (listener != null){
+        if (clickListener != null){
             SubjectViewModel tag = (SubjectViewModel)view.getTag();
-            listener.onItemClick(view, tag);
+            clickListener.onItemClick(view, tag);
         }
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        if (longClickListener != null){
+            SubjectViewModel tag = (SubjectViewModel)view.getTag();
+            longClickListener.onItemLongClick(view, tag);
+        }
+        return false;
+    }
+
+    public interface OnRecyclerViewItemLongClickListener<Model> {
+        public void onItemLongClick(View view, Model subject);
     }
 
     public interface OnRecyclerViewItemClickListener<Model> {
@@ -97,7 +115,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         public ViewHolder(final View itemView) {
             super(itemView);
-//            nameSubjectViewModel = (TextView)itemView.findViewById(R.id.nameSubjectTextView);
         }
     }
 

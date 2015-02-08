@@ -4,7 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Created by toni on 05/02/15.
+ *
+ * @author Toni
  */
 public class SQLiteManager {
 

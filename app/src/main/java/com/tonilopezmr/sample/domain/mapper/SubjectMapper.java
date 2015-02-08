@@ -3,7 +3,7 @@ package com.tonilopezmr.sample.domain.mapper;
 import com.tonilopezmr.sample.domain.Subject;
 
 /**
- * Created by toni on 07/02/15.
+ * @author toni.
  */
 public interface SubjectMapper<T> {
 

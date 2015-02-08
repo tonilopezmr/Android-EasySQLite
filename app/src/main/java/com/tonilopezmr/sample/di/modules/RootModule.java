@@ -3,7 +3,6 @@ package com.tonilopezmr.sample.di.modules;
 import android.content.Context;
 import android.view.LayoutInflater;
 
-import com.tonilopezmr.sample.di.BaseActivity;
 import com.tonilopezmr.sample.di.SubjectsApplication;
 import com.tonilopezmr.sample.ui.MainActivity;
 import com.tonilopezmr.sample.ui.presenter.SubjectListPresenterImp;
@@ -14,7 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by toni on 07/02/15.
+ * @author toni.
  */
 @Module(
         includes = {
@@ -23,9 +22,9 @@ import dagger.Provides;
             RepositoryModule.class
         },
         injects = {
-                SubjectsApplication.class,
-                SubjectListPresenterImp.class,
-                MainActivity.class
+            SubjectsApplication.class,
+            SubjectListPresenterImp.class,
+            MainActivity.class
         },
         library = true
 )

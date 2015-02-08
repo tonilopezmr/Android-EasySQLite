@@ -9,7 +9,7 @@ import java.util.List;
 import dagger.ObjectGraph;
 
 /**
- * Created by toni on 07/02/15.
+ * @author toni.
  */
 public class SubjectsApplication extends Application{
 
@@ -31,11 +31,11 @@ public class SubjectsApplication extends Application{
     }
 
 
-//    public ObjectGraph plus(List<Object> modules){
-//        if (modules == null) {
-//            throw new IllegalArgumentException(
-//                    "You can't plus a null module, review your getModules() implementation");
-//        }
-//        return objectGraph.plus(modules.toArray());
-//    }
+    public ObjectGraph plus(List<Object> modules){
+        if (modules == null) {
+            throw new IllegalArgumentException(
+                    "You can't plus a null module, review your getModules() implementation");
+        }
+        return objectGraph.plus(modules.toArray());
+    }
 }

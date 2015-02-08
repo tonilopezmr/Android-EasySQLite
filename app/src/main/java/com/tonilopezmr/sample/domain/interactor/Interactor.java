@@ -2,7 +2,7 @@ package com.tonilopezmr.sample.domain.interactor;
 
 
 /**
- * Created by toni on 03/02/15.
+ * @author toni.
  */
 public interface Interactor extends Runnable{
 

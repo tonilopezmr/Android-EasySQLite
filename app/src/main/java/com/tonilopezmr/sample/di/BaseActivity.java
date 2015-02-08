@@ -6,7 +6,7 @@ import android.os.Bundle;
 import butterknife.ButterKnife;
 
 /**
- * Created by toni on 07/02/15.
+ * @author toni.
  */
 public abstract class BaseActivity extends Activity{
 
@@ -14,7 +14,7 @@ public abstract class BaseActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
-//        injectViews();  TODO no funciona
+//        injectViews();  //TODO no funciona en BaseActivity
     }
 
     private void injectDependencies() {

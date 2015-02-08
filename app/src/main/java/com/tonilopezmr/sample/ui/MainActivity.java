@@ -1,6 +1,5 @@
 package com.tonilopezmr.sample.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.tonilopezmr.sample.R;
 import com.tonilopezmr.sample.di.BaseActivity;
-import com.tonilopezmr.sample.di.SubjectsApplication;
 import com.tonilopezmr.sample.ui.presenter.MainPresenter;
 import com.tonilopezmr.sample.ui.presenter.SubjectListPresenterImp;
 import com.tonilopezmr.sample.ui.view.SubjectListView;
@@ -30,7 +28,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MainActivity extends BaseActivity implements SubjectListView {
-
 
     MainPresenter presenter;
 
@@ -51,14 +48,13 @@ public class MainActivity extends BaseActivity implements SubjectListView {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-//        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         inicializeRecyclerView(recyclerView);
+        init();
+    }
 
-//        layoutError = (LinearLayout) findViewById(R.id.layout_error);
-//        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+    private void init(){
         presenter = new SubjectListPresenterImp(this);
 
-//        FloatingActionButton floatingButton = (FloatingActionButton)findViewById(R.id.floating_button);
         floatingButton.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
@@ -69,13 +65,6 @@ public class MainActivity extends BaseActivity implements SubjectListView {
         presenter.onInit();
     }
 
-//    @Override
-//    protected List<Object> getModules() {
-//        List<Object> modules = new ArrayList<>();
-////        modules.add(new MainActivityModule(this));
-//        return modules;
-//    }
-
     private void inicializeRecyclerView(RecyclerView recyclerView){
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -85,7 +74,13 @@ public class MainActivity extends BaseActivity implements SubjectListView {
         adapter.setOnItemClickListener(new MyRecyclerAdapter.OnRecyclerViewItemClickListener<SubjectViewModel>() {
             @Override
             public void onItemClick(android.view.View view, SubjectViewModel subject) {
-                presenter.onClickItem(subject.getName());
+                presenter.onClickItem(subject);
+            }
+        });
+        adapter.setOnLongClickListener(new MyRecyclerAdapter.OnRecyclerViewItemLongClickListener<SubjectViewModel>() {
+            @Override
+            public void onItemLongClick(View view, SubjectViewModel subject) {
+                presenter.onLongItemClick(subject);
             }
         });
         recyclerView.setAdapter(adapter);

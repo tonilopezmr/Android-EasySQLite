@@ -3,7 +3,7 @@ package com.tonilopezmr.sample.di;
 import android.content.Context;
 
 /**
- * Created by toni on 07/02/15.
+ * @author toni.
  */
 public class BasePresenter {
 

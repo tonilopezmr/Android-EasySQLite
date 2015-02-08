@@ -27,4 +27,20 @@ public class SubjectViewModelImp implements SubjectViewModel {
         return this.name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        boolean result = false;
+        if (o instanceof SubjectViewModel){
+            SubjectViewModel model = (SubjectViewModel)o;
+            if (this.id == model.getId() && this.name.equals(model.getName())){
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return id+" "+name;
+    }
 }

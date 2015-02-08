@@ -7,7 +7,8 @@ import com.tonilopezmr.sample.domain.mapper.SubjectMapper;
 import javax.inject.Inject;
 
 /**
- * Created by toni on 06/02/15.
+ *
+ * @author Toni
  */
 public class SubjectEntityMapper implements SubjectMapper<SubjectEntity>{
 

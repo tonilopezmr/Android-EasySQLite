@@ -6,7 +6,7 @@ import android.os.Looper;
 import javax.inject.Inject;
 
 /**
- * Created by toni on 03/02/15.
+ * @author toni.
  */
 public class MainThreadImp implements MainThread{
 

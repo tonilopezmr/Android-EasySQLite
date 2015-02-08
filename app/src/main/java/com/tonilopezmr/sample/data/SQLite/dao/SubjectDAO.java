@@ -7,7 +7,10 @@ import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
 import com.tonilopezmr.sample.data.SQLite.transformer.SubjectTransformer;
 
 /**
- * Created by toni on 05/02/15.
+ * DAO implementation, important extend for SQLiteDelegate and indicate the ObjectEntity.
+ * Each DAO implementation should have a Transformer.
+ *
+ * @author Toni
  */
 public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
     public SubjectDAO(SQLiteDatabase db) {

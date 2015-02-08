@@ -15,11 +15,12 @@ public interface SubjectRepository {
         void onError(SubjectException subjectException);
     }
 
-    interface SubjectCreateCallback {
-        void onCreateSubject(Subject subject);
+    interface SubjectUseCase {
+        void onMissionAccomplished(Subject subject);
         void onError(SubjectException subjectException);
     }
 
     void getSubjectsCollection(SubjectListCallback callback) throws SubjectException;
-    void createSubject(Subject subject, SubjectCreateCallback callback) throws SubjectException;
+    void createSubject(Subject subject, SubjectUseCase callback) throws SubjectException;
+    void deleteSubject(Subject subject, SubjectUseCase callback) throws  SubjectException;
 }

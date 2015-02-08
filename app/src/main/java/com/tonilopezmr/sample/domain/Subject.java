@@ -3,7 +3,7 @@ package com.tonilopezmr.sample.domain;
 import java.util.Collection;
 
 /**
- * Created by toni on 03/02/15.
+ * @author toni.
  */
 public class Subject {
 

@@ -9,12 +9,12 @@ import com.tonilopezmr.sample.executor.MainThread;
 /**
  * @author toni.
  */
-public class CreateSubjectUseCaseImp extends AbstractSubjectUseCase implements SubjectUseCase {
+public class DeleteSubjectUseCaseImp extends AbstractSubjectUseCase implements SubjectUseCase {
 
     private Callback callback;
     private Subject subject;
 
-    public CreateSubjectUseCaseImp(Executor executor, MainThread mainThread, SubjectRepository subjectRepository) {
+    public DeleteSubjectUseCaseImp(Executor executor, MainThread mainThread, SubjectRepository subjectRepository) {
         super(executor, mainThread, subjectRepository);
     }
 
@@ -33,13 +33,7 @@ public class CreateSubjectUseCaseImp extends AbstractSubjectUseCase implements S
     //Interactor Use case
     @Override
     public void run() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        getSubjectRepository().createSubject(subject, new SubjectRepository.SubjectUseCase() {
+        getSubjectRepository().deleteSubject(subject, new SubjectRepository.SubjectUseCase() {
             @Override
             public void onMissionAccomplished(final Subject subject) {
                 getMainThread().post(new Runnable() {

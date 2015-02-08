@@ -1,11 +1,16 @@
 package com.tonilopezmr.sample.domain.exception;
 
 /**
- * Created by toni on 06/02/15.
+ * @author toni.
  */
 public class SubjectException extends RuntimeException {
 
     private String message;
+
+    public SubjectException(String detailMessage) {
+        super(detailMessage);
+        this.message = detailMessage;
+    }
 
     public SubjectException(Exception exception) {
         this.setStackTrace(exception.getStackTrace());

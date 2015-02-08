@@ -1,6 +1,7 @@
 package com.tonilopezmr.sample.di.modules;
 
-import com.tonilopezmr.sample.domain.interactor.CreateSubjectUseCase;
+import com.tonilopezmr.sample.domain.interactor.DeleteSubjectUseCaseImp;
+import com.tonilopezmr.sample.domain.interactor.SubjectUseCase;
 import com.tonilopezmr.sample.domain.interactor.CreateSubjectUseCaseImp;
 import com.tonilopezmr.sample.domain.interactor.GetSubjectListUseCase;
 import com.tonilopezmr.sample.domain.interactor.GetSubjectListUseCaseImp;
@@ -14,7 +15,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by toni on 07/02/15.
+ *
+ * @author Toni
  */
 @Module(
         complete = false,
@@ -22,8 +24,15 @@ import dagger.Provides;
 )
 public final class InteractorModule {
 
+    @Named("delete usecase")
     @Provides
-    public CreateSubjectUseCase provideCreateSubjectUseCase(Executor executor, MainThread mainThread, @Named("internal_database")SubjectRepository subjectRepository){
+    public SubjectUseCase provideDeleteSubjectUseCase(Executor executor, MainThread mainThread, @Named("internal_database")SubjectRepository subjectRepository){
+        return new DeleteSubjectUseCaseImp(executor, mainThread, subjectRepository);
+    }
+
+    @Named("create usecase")
+    @Provides
+    public SubjectUseCase provideCreateSubjectUseCase(Executor executor, MainThread mainThread, @Named("internal_database")SubjectRepository subjectRepository){
         return new CreateSubjectUseCaseImp(executor, mainThread, subjectRepository);
     }
 

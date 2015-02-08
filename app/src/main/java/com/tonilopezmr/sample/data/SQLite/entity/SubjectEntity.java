@@ -1,7 +1,8 @@
 package com.tonilopezmr.sample.data.SQLite.entity;
 
 /**
- * Created by toni on 06/02/15.
+ *
+ * @author Toni
  */
 public class SubjectEntity {
     int id;

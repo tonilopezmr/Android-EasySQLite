@@ -5,7 +5,6 @@ import android.content.Context;
 import com.tonilopezmr.sample.data.SQLite.SQLiteManager;
 import com.tonilopezmr.sample.data.SQLite.dao.SubjectDAO;
 import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
-import com.tonilopezmr.sample.data.SQLite.entity.mapper.SubjectEntityMapper;
 import com.tonilopezmr.sample.domain.Subject;
 import com.tonilopezmr.sample.domain.exception.SubjectException;
 import com.tonilopezmr.sample.domain.mapper.SubjectMapper;
@@ -15,10 +14,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
-import javax.inject.Inject;
-
 /**
- * Created by toni on 05/02/15.
+ *
+ * @author Toni
  */
 public class SubjectDataRepository implements SubjectRepository {
 
@@ -43,10 +41,26 @@ public class SubjectDataRepository implements SubjectRepository {
     }
 
     @Override
-    public void createSubject(Subject subject, SubjectCreateCallback callback) throws SubjectException {
+    public void createSubject(Subject subject, SubjectUseCase callback) throws SubjectException {
         try {
             SubjectEntity subjectEntity = mapper.mapToSubjectEntity(subject);
-            callback.onCreateSubject(mapper.mapToSubject(subjectDAO.create(subjectEntity)));
+            callback.onMissionAccomplished(mapper.mapToSubject(subjectDAO.create(subjectEntity)));
+        } catch (Exception e) {
+            e.printStackTrace();
+            callback.onError(new SubjectException(e));
+        }
+    }
+
+    @Override
+    public void deleteSubject(Subject subject, SubjectUseCase callback) throws SubjectException {
+        try {
+            SubjectEntity subjectEntity = mapper.mapToSubjectEntity(subject);
+            boolean isDelete = subjectDAO.delete(subjectEntity);
+            if (isDelete){
+                callback.onMissionAccomplished(subject);
+            }else{
+                callback.onError(new SubjectException("Has not been deleted"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             callback.onError(new SubjectException(e));

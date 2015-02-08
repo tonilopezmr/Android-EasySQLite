@@ -2,19 +2,11 @@ package com.tonilopezmr.sample.ui.presenter;
 
 import android.util.Log;
 
-import com.tonilopezmr.sample.data.SQLite.repository.SubjectDataRepository;
 import com.tonilopezmr.sample.di.BasePresenter;
-import com.tonilopezmr.sample.di.SubjectsApplication;
 import com.tonilopezmr.sample.domain.Subject;
 import com.tonilopezmr.sample.domain.exception.SubjectException;
-import com.tonilopezmr.sample.domain.interactor.CreateSubjectUseCase;
-import com.tonilopezmr.sample.domain.interactor.CreateSubjectUseCaseImp;
+import com.tonilopezmr.sample.domain.interactor.SubjectUseCase;
 import com.tonilopezmr.sample.domain.interactor.GetSubjectListUseCase;
-import com.tonilopezmr.sample.domain.interactor.GetSubjectListUseCaseImp;
-import com.tonilopezmr.sample.domain.repository.SubjectRepository;
-import com.tonilopezmr.sample.executor.MainThread;
-import com.tonilopezmr.sample.executor.MainThreadImp;
-import com.tonilopezmr.sample.executor.ThreadExecutor;
 import com.tonilopezmr.sample.ui.view.SubjectListView;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModelImp;
@@ -23,9 +15,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
- * Created by toni on 04/02/15.
+ * @author toni.
  */
 public class SubjectListPresenterImp extends BasePresenter implements MainPresenter {
 
@@ -33,37 +26,20 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
 
     @Inject
     GetSubjectListUseCase subjectListUseCase;
+
+    @Named("create usecase")
     @Inject
-    CreateSubjectUseCase createSubjectUseCase;
+    SubjectUseCase createSubjectUseCase;
+
+    @Named("delete usecase")
+    @Inject
+    SubjectUseCase deleteSubjectUseCase;
 
     public SubjectListPresenterImp(SubjectListView view) {
         super(view.getContext());
         this.view = view;
-
-        //with dragger
-//        ThreadExecutor executor = new ThreadExecutor();
-//        MainThread mainThread = new MainThreadImp();
-
-//        SubjectDataRepository repository = new SubjectDataRepository(view.getContext());
-
-//        this.subjectListUseCase = new GetSubjectListUseCaseImp(executor, mainThread, repository);
-//        this.createSubjectUseCase = new CreateSubjectUseCaseImp(executor, mainThread, repository);
     }
 
-//    public SubjectListPresenterImp(SubjectListView view, GetSubjectListUseCase subjectListUseCase, CreateSubjectUseCase createSubjectUseCase) {
-//        this.view = view;
-//
-//        //with dragger
-////        ThreadExecutor executor = new ThreadExecutor();
-////        MainThread mainThread = new MainThreadImp();
-//
-////        SubjectDataRepository repository = new SubjectDataRepository(view.getContext());
-//
-////        this.subjectListUseCase = new GetSubjectListUseCaseImp(executor, mainThread, repository);
-////        this.createSubjectUseCase = new CreateSubjectUseCaseImp(executor, mainThread, repository);
-//        this.subjectListUseCase = subjectListUseCase;
-//        this.createSubjectUseCase = createSubjectUseCase;
-//    }
 
     @Override
     public void onInit() {
@@ -100,8 +76,24 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
     }
 
     @Override
-    public void onClickItem(String name) {
-        view.showMessage("the subject: "+name);
+    public void onClickItem(SubjectViewModel subjectModel) {
+        view.showMessage("the subject: "+subjectModel);
+    }
+
+    @Override
+    public void onLongItemClick(SubjectViewModel subjectModel) {
+        deleteSubjectUseCase.execute(new Subject(subjectModel.getId(), subjectModel.getName()), new SubjectUseCase.Callback() {
+            @Override
+            public void onMissionAccomplished(Subject subject) {
+                view.remove(new SubjectViewModelImp(subject));
+                view.showMessage("Mission accomplished, "+subject+", it has been deleted.");
+            }
+
+            @Override
+            public void onError(SubjectException ex) {
+                view.showMessage(ex.getMessage());
+            }
+        });
     }
 
     private void hideLayoutError(){
@@ -113,9 +105,9 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
 
     @Override
     public void onFloatingButtonClick(final SubjectViewModel subjectModel) {
-        createSubjectUseCase.execute(new Subject(subjectModel.getName()), new CreateSubjectUseCase.Callback() {
+        createSubjectUseCase.execute(new Subject(subjectModel.getName()), new SubjectUseCase.Callback() {
             @Override
-            public void onCreateSubject(Subject subject) {
+            public void onMissionAccomplished(Subject subject) {
                 hideLayoutError();
                 view.add(new SubjectViewModelImp(subject));
                 view.showMessage("Create new subject number "+subject.getId());
