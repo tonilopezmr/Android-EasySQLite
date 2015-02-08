@@ -1,14 +1,14 @@
-EasySQLite
------------
+#EasySQLite
+
 Use easily the database SQLite on android using the DAO and transformer design patterns.
 
-How to use
-------------
+#How to use
 
-#Import with Gradle:
 
-#1. Create the object Transformer
-
+Import with Gradle:
+-------------------
+1. Create the object Transformer
+-------------------
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 
 	    public static final String ID = "id";
@@ -55,7 +55,8 @@ How to use
 	    }
 	}
 
-#2. Create the object DAO
+2. Create the object DAO
+---------------------------
 
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
 
@@ -68,7 +69,8 @@ How to use
 		...	    
 	}
 
-#If you needs one relation between objects
+If you needs one relation between objects (foreign key)
+--------------------------------------
 
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 		
@@ -95,7 +97,8 @@ and
 
 
 
-#Sample Clean architecture
+Sample Clean architecture
+--------------------------
 
 The code what use this library he is in package 'com.tonilopezmr.sample.data.SQLite'.
 
@@ -114,7 +117,8 @@ After see the MVP implementations of:
 * [Butterknife][2]
 * [FloatingActionButton][3]
 
-#If I have anything is wrong contact with me
+If I have anything is wrong contact with me
+---------------------------------------------
 
 * Antonio López Marín - <tonilopezmr@gmail.com>
 
@@ -125,6 +129,7 @@ After see the MVP implementations of:
   <img alt="Add me to Linkedin" src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/linkedin_circle_black-128.png" />
 </a>
 
+	Sorry for my English :(
 
 License
 -------
