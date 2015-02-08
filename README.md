@@ -4,10 +4,10 @@ Use easily the database SQLite on android using the DAO and transformer design p
 
 #How to use
 
-
 ####Import with Gradle:
 
-####1. Create the object Transformer
+####1. Create the object Transformer implements SQLiteTransformer<T>
+
 ```java
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 
@@ -55,7 +55,8 @@ Use easily the database SQLite on android using the DAO and transformer design p
 	    }
 	}
 ```
-####2. Create the object DAO
+####2. Create the object DAO extends SQLiteDelegate<T>
+
 ```java
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
 
@@ -88,9 +89,11 @@ Use easily the database SQLite on android using the DAO and transformer design p
 
 ```java
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
+	
 	    	public SubjectDAO(SQLiteDatabase db) {
 	        	super(db, new SubjectTransformer(db));
 	    	}
+	    	
 	}
 ```
 
