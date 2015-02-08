@@ -94,8 +94,8 @@ Use easily the database SQLite on android using the DAO and transformer design p
 
 
 
-###Sample Clean architecture
-
+Sample Clean architecture
+-------------------------
 The code what use this library he is in package 'com.tonilopezmr.sample.data.SQLite'.
 
 I use the Clean architecture with the pattern MVP, I have been motivated for the speaker [pedrovgs][10] in DroidCon 2014.
@@ -107,21 +107,23 @@ After see the MVP implementations of:
 * [Android-CleanArchitecture][8] by [android10][9] 
 
 
-###Libraries used on the sample project
+Libraries used on the sample project
+------------------------------------
 
 * [Dagger][1]
 * [Butterknife][2]
 * [FloatingActionButton][3]
 
-###If I have anything is wrong contact with me
+If I have anything is wrong contact with me
+-------------------------------------------
 
 * Antonio López Marín - <tonilopezmr@gmail.com>
 
 <a href="https://twitter.com/tonilz">
-  <img alt="Follow me on Twitter" src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/twitter_circle_black-128.png" />
+  <img alt="Follow me on Twitter" src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/twitter_circle_black-128.png" width="60" height="60"/>
 </a>
 <a href="http://www.linkedin.com/in/tonilopezmr">
-  <img alt="Add me to Linkedin" src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/linkedin_circle_black-128.png" />
+  <img alt="Add me to Linkedin" src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/linkedin_circle_black-128.png" width="60" height="60"/>
 </a>
 
 ####Sorry for my English :(
