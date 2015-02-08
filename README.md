@@ -5,10 +5,10 @@ Use easily the database SQLite on android using the DAO and transformer design p
 #How to use
 
 
-Import with Gradle:
--------------------
-1. Create the object Transformer
--------------------
+###Import with Gradle:
+
+###1. Create the object Transformer
+
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 
 	    public static final String ID = "id";
@@ -55,8 +55,8 @@ Import with Gradle:
 	    }
 	}
 
-2. Create the object DAO
----------------------------
+###2. Create the object DAO
+
 
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
 
@@ -69,8 +69,8 @@ Import with Gradle:
 		...	    
 	}
 
-If you needs one relation between objects (foreign key)
---------------------------------------
+###If you needs one relation between objects (foreign key)
+
 
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 		
@@ -85,7 +85,7 @@ If you needs one relation between objects (foreign key)
 		...	
 	}
 
-and
+##and
 
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
 
@@ -97,8 +97,7 @@ and
 
 
 
-Sample Clean architecture
---------------------------
+###Sample Clean architecture
 
 The code what use this library he is in package 'com.tonilopezmr.sample.data.SQLite'.
 
@@ -111,14 +110,14 @@ After see the MVP implementations of:
 * [Android-CleanArchitecture][8] by [android10][9] 
 
 
-#(In sample) Libraries used on the sample project
+###Libraries used on the sample project
 
 * [Dagger][1]
 * [Butterknife][2]
 * [FloatingActionButton][3]
 
-If I have anything is wrong contact with me
----------------------------------------------
+###If I have anything is wrong contact with me
+
 
 * Antonio López Marín - <tonilopezmr@gmail.com>
 
@@ -129,7 +128,7 @@ If I have anything is wrong contact with me
   <img alt="Add me to Linkedin" src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/linkedin_circle_black-128.png" />
 </a>
 
-	Sorry for my English :(
+####Sorry for my English :(
 
 License
 -------
