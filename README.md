@@ -8,7 +8,7 @@ Use easily the database SQLite on android using the DAO and transformer design p
 ####Import with Gradle:
 
 ####1. Create the object Transformer
-
+```java
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 
 	    public static final String ID = "id";
@@ -54,9 +54,9 @@ Use easily the database SQLite on android using the DAO and transformer design p
 	        return TABLE_NAME;
 	    }
 	}
-
+```
 ####2. Create the object DAO
-
+```java
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
 
 	    public SubjectDAO(SQLiteDatabase db) {
@@ -67,10 +67,10 @@ Use easily the database SQLite on android using the DAO and transformer design p
 
 		...	    
 	}
-
+```
 ####If you needs one relation between objects (foreign key)
 
-
+```java
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
 		
 		...
@@ -83,15 +83,16 @@ Use easily the database SQLite on android using the DAO and transformer design p
 
 		...	
 	}
+```
+####and
 
-###and
-
+```java
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
 	    	public SubjectDAO(SQLiteDatabase db) {
 	        	super(db, new SubjectTransformer(db));
 	    	}
 	}
-
+```
 
 
 Sample Clean architecture
