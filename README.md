@@ -2,6 +2,10 @@
 
 Use easily the database SQLite on android using the DAO and transformer design patterns.
 
+Los metodos basicos ya están implementados en las clase SQLiteDelegate<T>, si necesitas más consultas tendrías que extender de ella.
+
+Basic methods are already implemented in the class SQLiteDelegate<T>, if you need further queries you should extend from it.
+
 #How to use
 
 ####Import with Gradle:
@@ -76,9 +80,11 @@ The SQLiteDelegate<T> has implemented the following methods:
 	        super(db, new SubjectTransformer());
 	    }
 		
-		//In the case you need more querys, write this.
-
-		...	    
+	    //In the case you need more querys, write this for example:
+	    public List<T> getSubjectsApproved() {
+	    	...	    
+	    }
+	    
 	}
 ```
 ####If you need one relation between objects (foreign key)
