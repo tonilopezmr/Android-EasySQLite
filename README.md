@@ -8,7 +8,7 @@ Use easily the database SQLite on android using the DAO and transformer design p
 
 Waiting maven central ticket...
 
-####1. Create the object Transformer implements SQLiteTransformer<T>
+####1. Create the object Transformer which implements SQLiteTransformer<T>
 
 ```java
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
@@ -57,7 +57,7 @@ Waiting maven central ticket...
 	    }
 	}
 ```
-####2. Create the object DAO extends SQLiteDelegate<T>
+####2. Create the object DAO which extends SQLiteDelegate<T>
 
 ```java
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
@@ -71,7 +71,7 @@ Waiting maven central ticket...
 		...	    
 	}
 ```
-####If you needs one relation between objects (foreign key)
+####If you need one relation between objects (foreign key)
 
 ```java
 	public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
@@ -102,7 +102,7 @@ Waiting maven central ticket...
 
 Sample Clean architecture
 -------------------------
-The code what use this library he is in package 'com.tonilopezmr.sample.data.SQLite'.
+The code which uses this library is in the package 'com.tonilopezmr.sample.data.SQLite'.
 
 I use the Clean architecture with the pattern MVP, I have been motivated for the speaker [pedrovgs][10] in DroidCon 2014.
 
@@ -120,7 +120,7 @@ Libraries used on the sample project
 * [Butterknife][2]
 * [FloatingActionButton][3]
 
-If I have anything is wrong contact with me
+If anything is wrong contact me
 -------------------------------------------
 
 * Antonio López Marín - <tonilopezmr@gmail.com>
