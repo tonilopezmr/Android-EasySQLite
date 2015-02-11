@@ -1,4 +1,4 @@
-#EasySQLite
+#EasySQLite [![Build Status](https://travis-ci.org/tonilopezmr/Android-EasySQLite.svg?branch=master)](https://travis-ci.org/tonilopezmr/Android-EasySQLite)
 
 Use easily the database SQLite on android using the DAO and transformer design patterns.
 
