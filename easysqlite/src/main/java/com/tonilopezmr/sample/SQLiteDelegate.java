@@ -18,6 +18,7 @@ package com.tonilopezmr.sample;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import java.util.Collection;
@@ -38,31 +39,70 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
         this.db = db;
     }
 
+    /**
+     * Convenience method for inserting a row into the database.
+     *
+     * @param dto
+     * @return T object with the
+     * @throws SQLiteException
+     */
     @Override
     public synchronized T create(T dto) throws Exception {
         long rowid = db.insert(transformer.getTableName(),null,transformer.transform(dto));
         Log.i(this.getClass().getName(), "ROW ID: " + rowid);
+
+        if (rowid == -1) throw new SQLiteException("Error inserting "+dto.getClass().toString());
+
         return transformer.setId(dto, rowid);
     }
 
+
+    /**
+     * Convenience method for updating rows in the database.
+     *
+     * @param dto
+     * @return true on success, false on failed
+     * @throws Exception
+     */
     @Override
     public synchronized boolean update(T dto) throws Exception {
         int confirm = db.update(transformer.getTableName(), transformer.transform(dto),transformer.getWhereClause(dto), null);
         return confirm!=0;
     }
 
+    /**
+     * Convenience method for deleting rows in the database.
+     *
+     * @param dto
+     * @return true on success, false on failed
+     * @throws Exception
+     */
     @Override
     public synchronized boolean delete(T dto) throws Exception {
         int confirm = db.delete(transformer.getTableName(), transformer.getWhereClause(dto), null);
         return confirm!=0;
     }
 
+    /**
+     * Convenience method for deleting all rows in the table of database.
+     *
+     * @return true on success, false on failed
+     * @throws Exception
+     */
     @Override
     public synchronized boolean deleteAll() throws Exception {
         int confirm = db.delete(transformer.getTableName(), null, null);
         return confirm!=0;
     }
 
+
+    /**
+     * Convenience method for reading rows in the database.
+     *
+     * @param id row in database
+     * @return T object
+     * @throws Exception
+     */
     @Override
     public synchronized T read(T id) throws Exception {
         Cursor cursor = db.query(transformer.getTableName(), transformer.getFields(), transformer.getWhereClause(id),null, null,null,null);
@@ -73,6 +113,12 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
         return object;
     }
 
+    /**
+     * Convenience method for reading all rows in the table of database.
+     *
+     * @return Collection<T>
+     * @throws Exception
+     */
     @Override
     public synchronized Collection<T> readAll() throws Exception {
         Cursor cursor = db.query(transformer.getTableName(), transformer.getFields(), null, null, null, null, null);
