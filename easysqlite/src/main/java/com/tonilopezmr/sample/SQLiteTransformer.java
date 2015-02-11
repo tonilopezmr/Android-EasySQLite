@@ -20,10 +20,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 /**
- * Created by Antonio Lopez on 1/05/14.
+ * Interfaz Transformer for SQLite.
  *
- * Interfaz Transformer para SQLite.
- *
+ * @author Juan Vicente Carrillo
  * @author Antonio López Marín
  */
 public interface SQLiteTransformer<T> {

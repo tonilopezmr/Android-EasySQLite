@@ -24,8 +24,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * Clase delegada encargada de implementar los métodos CRUD
- * para cualquier objeto de la base de datos.
+ * Class delegated charge of implementing CRUD methods for any object model.
  *
  * @author Antonio Lopez
  */
