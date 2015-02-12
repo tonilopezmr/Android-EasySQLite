@@ -1,12 +1,28 @@
-#EasySQLite
+#EasySQLite [![Build Status](https://travis-ci.org/tonilopezmr/Android-EasySQLite.svg?branch=master)](https://travis-ci.org/tonilopezmr/Android-EasySQLite) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tonilopezmr/easysqlite/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tonilopezmr/easysqlite)
 
-Use easily the database SQLite on android using the DAO and transformer design patterns.
+Use easily the database SQLite on android using the DAO and transformer design patterns, I modified the library of professor [@jvprofe][11], I learned from him.
+
+Basic methods are already implemented in the class SQLiteDelegate<T>, if you need further queries you should extend from it.
 
 #How to use
 
-####Import with Gradle:
+####Import EasySQLite dependency:
 
-Waiting maven central ticket...
+Grab via maven:
+
+```xml
+<dependency>
+    <groupId>com.github.tonilopezmr</groupId>
+    <artifactId>easysqlite</artifactId>
+    <version>1.0.1</version>
+</dependency>
+```
+
+or gradle:
+
+```gradle
+compile 'com.github.tonilopezmr:easysqlite:1.0.1'
+````
 
 ####1. Create the object Transformer which implements SQLiteTransformer<T>
 
@@ -59,6 +75,16 @@ Waiting maven central ticket...
 ```
 ####2. Create the object DAO which extends SQLiteDelegate<T>
 
+The SQLiteDelegate<T> has implemented the following methods:
+
+    //Default methods implement with SQLiteDelegate
+    T create(T dto)
+    boolean update(T dto)
+    T read(T id)
+    Collection<T> readAll()
+    boolean delete(T dto)
+    boolean deleteAll()
+
 ```java
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
 
@@ -66,9 +92,11 @@ Waiting maven central ticket...
 	        super(db, new SubjectTransformer());
 	    }
 		
-		//In the case you need more querys, write this.
-
-		...	    
+	    //In the case you need more querys, write this for example:
+	    public List<T> getSubjectsApproved() {
+	    	...	    
+	    }
+	    
 	}
 ```
 ####If you need one relation between objects (foreign key)
@@ -99,6 +127,23 @@ Waiting maven central ticket...
 	}
 ```
 
+####3. Instance the object DAO and use the CRUD methods
+
+```java
+    
+    ...
+    
+    SubjectDAO subjectDAO = new SubjectDAO(database);
+    Subject subject = new Subject("maths");
+    
+    //Create
+    subject = subjectDAO.create(subject);
+    
+    //Delete
+    boolean isDelete = subjectDAO.delete(subject);
+    ...
+    
+```
 
 Sample Clean architecture
 -------------------------
@@ -162,3 +207,4 @@ License
 [8]: https://github.com/android10/Android-CleanArchitecture
 [9]: https://github.com/android10
 [10]: http://www.slideshare.net/PedroVicenteGmezSnch/effective-android-ui-english
+[11]: https://twitter.com/jvprofe
