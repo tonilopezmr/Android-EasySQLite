@@ -2,8 +2,6 @@
 
 Use easily the database SQLite on android using the DAO and transformer design patterns.
 
-Los metodos basicos ya están implementados en las clase SQLiteDelegate<T>, si necesitas más consultas tendrías que extender de ella.
-
 Basic methods are already implemented in the class SQLiteDelegate<T>, if you need further queries you should extend from it.
 
 #How to use
