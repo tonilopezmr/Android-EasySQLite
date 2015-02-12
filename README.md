@@ -10,7 +10,7 @@ Basic methods are already implemented in the class SQLiteDelegate<T>, if you nee
 
 Grab via maven:
 
-```maven
+```xml
 <dependency>
     <groupId>com.github.tonilopezmr</groupId>
     <artifactId>easysqlite</artifactId>
