@@ -1,4 +1,4 @@
-#EasySQLite [![Build Status](https://travis-ci.org/tonilopezmr/Android-EasySQLite.svg?branch=master)](https://travis-ci.org/tonilopezmr/Android-EasySQLite)
+#EasySQLite [![Build Status](https://travis-ci.org/tonilopezmr/Android-EasySQLite.svg?branch=master)](https://travis-ci.org/tonilopezmr/Android-EasySQLite) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tonilopezmr/easysqlite/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tonilopezmr/easysqlite)
 
 Use easily the database SQLite on android using the DAO and transformer design patterns.
 
@@ -6,9 +6,23 @@ Basic methods are already implemented in the class SQLiteDelegate<T>, if you nee
 
 #How to use
 
-####Import with Gradle:
+####Import EasySQLite dependency:
 
-Waiting maven central ticket...
+Grab via maven:
+
+```maven
+<dependency>
+    <groupId>com.github.tonilopezmr</groupId>
+    <artifactId>easysqlite</artifactId>
+    <version>1.0.1</version>
+</dependency>
+```
+
+or gradle:
+
+```gradle
+compile 'com.github.tonilopezmr:easysqlite:1.0.1'
+````
 
 ####1. Create the object Transformer which implements SQLiteTransformer<T>
 
