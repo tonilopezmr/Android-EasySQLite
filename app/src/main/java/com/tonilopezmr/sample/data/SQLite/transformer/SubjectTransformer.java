@@ -3,7 +3,7 @@ package com.tonilopezmr.sample.data.SQLite.transformer;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.tonilopezmr.sample.SQLiteTransformer;
+import com.tonilopezmr.easysqlite.SQLiteTransformer;
 import com.tonilopezmr.sample.data.SQLite.entity.SubjectEntity;
 
 /**

@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.tonilopezmr.sample;
+package com.tonilopezmr.easysqlite;
+
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +35,12 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
     protected SQLiteTransformer<T> transformer;
     protected SQLiteDatabase db;
 
+    /**
+     * Constructor with two parameters, database and transformer.
+     *
+     * @param db SQLiteDatabase android
+     * @param transformer SQLiteTransformer
+     */
     public SQLiteDelegate(SQLiteDatabase db, SQLiteTransformer<T> transformer) {
         this.transformer = transformer;
         this.db = db;
@@ -42,9 +49,9 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
     /**
      * Convenience method for inserting a row into the database.
      *
-     * @param dto
+     * @param dto any object
      * @return T object with the
-     * @throws SQLiteException
+     * @throws android.database.sqlite.SQLiteException Error inserting
      */
     @Override
     public synchronized T create(T dto) throws Exception {
@@ -60,9 +67,9 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
     /**
      * Convenience method for updating rows in the database.
      *
-     * @param dto
+     * @param dto object
      * @return true on success, false on failed
-     * @throws Exception
+     * @throws Exception on error
      */
     @Override
     public synchronized boolean update(T dto) throws Exception {
@@ -73,9 +80,9 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
     /**
      * Convenience method for deleting rows in the database.
      *
-     * @param dto
+     * @param dto any object
      * @return true on success, false on failed
-     * @throws Exception
+     * @throws Exception on error
      */
     @Override
     public synchronized boolean delete(T dto) throws Exception {
@@ -87,7 +94,7 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
      * Convenience method for deleting all rows in the table of database.
      *
      * @return true on success, false on failed
-     * @throws Exception
+     * @throws Exception on error
      */
     @Override
     public synchronized boolean deleteAll() throws Exception {
@@ -101,7 +108,7 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
      *
      * @param id row in database
      * @return T object
-     * @throws Exception
+     * @throws Exception on error
      */
     @Override
     public synchronized T read(T id) throws Exception {
@@ -116,8 +123,8 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
     /**
      * Convenience method for reading all rows in the table of database.
      *
-     * @return Collection<T>
-     * @throws Exception
+     * @return Collection objects
+     * @throws Exception on error
      */
     @Override
     public synchronized Collection<T> readAll() throws Exception {

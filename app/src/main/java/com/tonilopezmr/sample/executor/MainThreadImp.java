@@ -3,8 +3,6 @@ package com.tonilopezmr.sample.executor;
 import android.os.Handler;
 import android.os.Looper;
 
-import javax.inject.Inject;
-
 /**
  * @author toni.
  */

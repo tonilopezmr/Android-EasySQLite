@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tonilopezmr.sample;
+package com.tonilopezmr.easysqlite;
 
 import android.content.ContentValues;
 import android.database.Cursor;

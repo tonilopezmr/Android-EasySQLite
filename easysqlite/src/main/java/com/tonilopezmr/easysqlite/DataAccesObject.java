@@ -18,7 +18,7 @@
  * Internet: tonilopezmr.com
  */
 
-package com.tonilopezmr.sample;
+package com.tonilopezmr.easysqlite;
 
 import java.util.Collection;
 

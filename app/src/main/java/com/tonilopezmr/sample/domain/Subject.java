@@ -1,7 +1,5 @@
 package com.tonilopezmr.sample.domain;
 
-import java.util.Collection;
-
 /**
  * @author toni.
  */

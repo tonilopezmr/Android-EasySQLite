@@ -26,7 +26,6 @@ public class SubjectDataRepository implements SubjectRepository {
     public SubjectDataRepository(Context context, SubjectMapper mapper) {
         subjectDAO = new SubjectDAO(SQLiteManager.getDataBase(context));
         this.mapper = mapper;
-//        mapper = new SubjectEntityMapper();
     }
 
     @Override
