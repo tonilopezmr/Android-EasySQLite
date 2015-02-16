@@ -6,7 +6,7 @@ import com.tonilopezmr.sample.domain.exception.SubjectException;
 import java.util.Collection;
 
 /**
- * Created by toni on 04/02/15.
+ * @author toni.
  */
 public interface SubjectRepository {
 

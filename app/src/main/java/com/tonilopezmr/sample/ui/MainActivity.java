@@ -130,6 +130,7 @@ public class MainActivity extends BaseActivity implements SubjectListView {
 
     @Override
     public void showLayoutError() {
+        floatingButton.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         layoutError.setVisibility(View.VISIBLE);
     }

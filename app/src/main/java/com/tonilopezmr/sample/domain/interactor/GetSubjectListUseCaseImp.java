@@ -29,8 +29,6 @@ public class GetSubjectListUseCaseImp implements GetSubjectListUseCase{
         this.mainThread = mainThread;
     }
 
-    //aqui puede tirarse el rato que quiera porque esta en un hilo
-    //De la implementacion de GetSubjectListUseCase
     @Override
     public void execute(final Callback callback) {
         if (callback == null) {
