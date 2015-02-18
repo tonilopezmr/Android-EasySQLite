@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015 Antonio López Marín <tonilopezmr.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.tonilopezmr.easysqlite;
 
 import android.content.Context;
@@ -8,7 +23,7 @@ import android.util.Log;
 import com.tonilopezmr.easysqlite.exception.SQLiteHelperException;
 
 /**
- * @author toni.
+ * @author Antonio López Marín
  */
 public final class SQLiteHelper extends SQLiteOpenHelper{
 
@@ -264,10 +279,9 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
          * It is a default implementation of onCreate, only creates all tables.
          *
          * @param db The database.
-         * @throws SQLiteHelperException
          */
         @Override
-        public void onCreate(SQLiteDatabase db) throws SQLiteHelperException {
+        public void onCreate(SQLiteDatabase db){
             for (String table : tables) {
                 db.execSQL(table);
             }
@@ -281,7 +295,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
          * @param newVersion int New version
          */
         @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) throws SQLiteHelperException {
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
             for (int i = tableNames.length-1; i >= 0; i--) {
                 db.execSQL(DROP + tableNames[i]);
             }
@@ -302,7 +316,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
         /**
          * Set the isOnForeignKey value, if you need to link tables.
          *
-         * @param isOnForeignKey
+         * @param isOnForeignKey the boolean value to determinate if the foreign keys are enable or not.
          * @return ConfigBuilder
          */
         @Override
@@ -360,11 +374,11 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
     }
 
     public interface OnCreateCallback{
-        public void onCreate(SQLiteDatabase db) throws SQLiteHelperException;
+        public void onCreate(SQLiteDatabase db);
     }
 
     public interface onUpgradeCallback{
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) throws SQLiteHelperException;
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
     }
 
     public interface SQLiteHelperCallback extends  OnCreateCallback, onUpgradeCallback{

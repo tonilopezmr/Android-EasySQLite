@@ -49,7 +49,7 @@ public class SQLiteManager {
 
     private static SQLiteHelper.OnCreateCallback onCreateCallback = new SQLiteHelper.OnCreateCallback() {
         @Override
-        public void onCreate(SQLiteDatabase db) throws SQLiteHelperException {
+        public void onCreate(SQLiteDatabase db){
             db.execSQL(SUBJECT_TABLE);
             db.execSQL("INSERT INTO "+SUBJECT+"(name) VALUES ('Maths')");
             db.execSQL("INSERT INTO "+SUBJECT+"(name) VALUES ('Biology')");

@@ -14,14 +14,14 @@ Grab via maven:
 <dependency>
     <groupId>com.github.tonilopezmr</groupId>
     <artifactId>easysqlite</artifactId>
-    <version>1.0.2</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
 or gradle:
 
 ```gradle
-compile 'com.github.tonilopezmr:easysqlite:1.0.2'
+compile 'com.github.tonilopezmr:easysqlite:2.0.0'
 ````
 
 ####1. Create the object Transformer which implements SQLiteTransformer<T>
