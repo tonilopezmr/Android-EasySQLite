@@ -1,38 +1,60 @@
 package com.tonilopezmr.easysqlite;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.tonilopezmr.easysqlite.exception.SQLiteHelperException;
 
 /**
  * @author toni.
  */
 public class SQLiteHelper extends SQLiteOpenHelper{
 
-    private SQLiteEvents events;
+    private Builder builder;
 
     public SQLiteHelper(Builder builder) {
         super(builder.context, builder.databaseName, builder.factory, builder.databaseVersion);
 
-        events = builder.sqliteEvents;
+        this.builder = builder;
     }
 
-    public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public String getDatabaseName(){
+        return builder.databaseName;
+    }
+
+    public int getDatabaseVersion(){
+        return builder.databaseVersion;
+    }
+
+    public boolean isOnForeignKey(){
+        return builder.isOnForeignKey;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        events.onCreate(db);
+        try {
+            builder.onCreateCallback.onCreate(db);
+        } catch (SQLiteHelperException e) {
+            Log.e(this.getClass().toString(), Log.getStackTraceString(e), e);
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        events.onUpdate(db, oldVersion, newVersion);
+        try {
+            builder.onUpdateCallback.onUpdate(db, oldVersion, newVersion);
+        } catch (SQLiteHelperException e) {
+            Log.e(this.getClass().toString(), Log.getStackTraceString(e), e);
+        }
     }
 
-    public static class Builder implements SQLiteBuilder, SQLiteHelperBuilder, SQLiteEvents, ConfigBuilder{
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder implements SQLiteHelperBuilder, SQLiteHelperCallback, ConfigBuilder{
 
         private Context context;
         private String databaseName;
@@ -42,26 +64,29 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         private String[] tables;
         private String[] tableNames;
 
-        private SQLiteEvents sqliteEvents;
+        private OnCreateCallback onCreateCallback;
+        private OnUpdateCallback onUpdateCallback;
 
         private boolean isOnForeignKey;
 
         final private String FOREIGN_KEY_ON = "PRAGMA foreign_keys = ON";
         final private String DROP = "DROP TABLE IF EXISTS ";
 
-        public Builder(Context context) {
-            this.context = context;
-            this.databaseName = "com.example.sqlitedatabase";
+        public Builder() {
+            this.context = null;
+            this.databaseName = "com.sqlitedatabase";
             this.databaseVersion = 1;
             this.factory = null;
-            this.sqliteEvents = this;
+            this.onUpdateCallback = this;
+            this.onCreateCallback = this;
 
             //config
             this.isOnForeignKey = false;
         }
 
         @Override
-        public SQLiteHelper build(Context context, String databaseName, SQLiteDatabase.CursorFactory factory, int databaseVersion) {
+        public SQLiteHelper build(Context context, String databaseName,
+                                  SQLiteDatabase.CursorFactory factory, int databaseVersion) {
             this.context = context;
             this.databaseName = databaseName;
             this.factory = factory;
@@ -78,6 +103,13 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         }
 
         @Override
+        public SQLiteHelper build(Context context) {
+            this.context = context;
+            return new SQLiteHelper(this);
+        }
+
+
+        @Override
         public SQLiteHelperBuilder tables(String[] tables) {
             this.tables = tables;
             return this;
@@ -89,42 +121,104 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             return this;
         }
 
-        //Events
         @Override
-        public void onCreate(SQLiteDatabase db) {
-            for (int i = 0; i < tables.length; i++){
-                db.execSQL(tables[i]);
-            }
+        public SQLiteHelperBuilder version(int version) {
+            this.databaseVersion = version;
+            return this;
         }
 
         @Override
-        public void onUpdate(SQLiteDatabase db, int oldVerison, int newVersion) {
-            for (int i = 0; i < tableNames.length; i++){
+        public SQLiteHelperBuilder name(String name) {
+            this.databaseName = name;
+            return this;
+        }
+
+        private void executePragma(SQLiteDatabase db){
+            if (isOnForeignKey) db.execSQL(FOREIGN_KEY_ON);
+        }
+
+        //Events
+        @Override
+        public void onCreate(SQLiteDatabase db) throws SQLiteHelperException {
+            if(tables == null){
+                throw new SQLiteHelperException("The array of String tables can't be null!!");
+            }
+
+            executePragma(db);
+
+            for (String table : tables) {
+                db.execSQL(table);
+            }
+        }
+
+        /**
+         * It is a default implementation of onUpdate.
+         *
+         *
+         * @param db SQLiteDatabase db
+         * @param oldVerison int Old version
+         * @param newVersion int New version
+         */
+        @Override
+        public void onUpdate(SQLiteDatabase db, int oldVerison, int newVersion) throws SQLiteHelperException {
+            if (tableNames == null) {
+                throw new SQLiteHelperException("The array of String tableNames can't be null!!");
+            }
+
+
+            for (int i = tableNames.length-1; i >= 0; i--) {
                 db.execSQL(DROP + tableNames[i]);
             }
+
+            onCreateCallback.onCreate(db);
         }
 
         //Config
         @Override
-        public ConfigBuilder foreignKey(boolean onOff) {
-            return null;
+        public ConfigBuilder beginConfig() {
+            return this;
         }
 
         @Override
-        public ConfigBuilder events(SQLiteEvents events) {
-            this.sqliteEvents = events;
+        public ConfigBuilder foreignKey(boolean isOnForeignKey) {
+            this.isOnForeignKey = isOnForeignKey;
+            return this;
+        }
+
+        @Override
+        public ConfigBuilder helperCallback(SQLiteHelperCallback callback) {
+            this.onCreateCallback = callback;
+            this.onUpdateCallback = callback;
+            return this;
+        }
+
+        @Override
+        public ConfigBuilder onCreateCallback(OnCreateCallback onCreateCallback) {
+            this.onCreateCallback = onCreateCallback;
+            return this;
+        }
+
+        @Override
+        public ConfigBuilder onUpdateCallback(OnUpdateCallback onUpdateCallback) {
+            this.onUpdateCallback = onUpdateCallback;
             return this;
         }
 
         @Override
         public SQLiteHelperBuilder endConfig() {
-            return null;
+            return this;
         }
     }
 
-    public interface SQLiteEvents{
-        public void onCreate(SQLiteDatabase db);
-        public void onUpdate(SQLiteDatabase db, int oldVerison, int newVersion);
+    public interface OnCreateCallback{
+        public void onCreate(SQLiteDatabase db) throws SQLiteHelperException;
+    }
+
+    public interface OnUpdateCallback{
+        public void onUpdate(SQLiteDatabase db, int oldVerison, int newVersion) throws SQLiteHelperException;
+    }
+
+    public interface SQLiteHelperCallback extends  OnCreateCallback, OnUpdateCallback{
     }
 
     public interface SQLiteBuilder {
@@ -133,17 +227,24 @@ public class SQLiteHelper extends SQLiteOpenHelper{
                                   SQLiteDatabase.CursorFactory factory, int databaseVersion);
         //without CursorFactory
         public SQLiteHelper build(Context context, String databaseName, int databaseVersion);
+        public SQLiteHelper build(Context context);
     }
 
     public interface ConfigBuilder{
         public ConfigBuilder foreignKey(boolean onOff);
-        public ConfigBuilder events(SQLiteEvents events);
+        public ConfigBuilder beginConfig();
+        public ConfigBuilder helperCallback(SQLiteHelperCallback callback);
+        public ConfigBuilder onCreateCallback(OnCreateCallback onCreateCallback);
+        public ConfigBuilder onUpdateCallback(OnUpdateCallback onUpdateCallback);
         public SQLiteHelperBuilder endConfig();
     }
 
     //concrete build
-    public interface SQLiteHelperBuilder {
+    public interface SQLiteHelperBuilder extends SQLiteBuilder{
+        public ConfigBuilder beginConfig();
         public SQLiteHelperBuilder tables(String[] tables);
         public SQLiteHelperBuilder tableNames(String [] tableNames);
+        public SQLiteHelperBuilder version(int version);
+        public SQLiteHelperBuilder name(String name);
     }
 }
