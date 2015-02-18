@@ -14,7 +14,7 @@ import com.tonilopezmr.easysqlite.exception.SQLiteHelperException;
 public class SQLiteManager {
 
     public final static String DATABASE_NAME = "com.tonilopezmr.sample.database";
-    public final static int SQLITE_VERSION = 11;
+    public final static int SQLITE_VERSION = 12;
 
 
     private static final String SUBJECT_TABLE =

@@ -10,46 +10,86 @@ import com.tonilopezmr.easysqlite.exception.SQLiteHelperException;
 /**
  * @author toni.
  */
-public class SQLiteHelper extends SQLiteOpenHelper{
+public final class SQLiteHelper extends SQLiteOpenHelper{
 
     private Builder builder;
 
-    public SQLiteHelper(Builder builder) {
+    private SQLiteHelper(Builder builder) {
         super(builder.context, builder.databaseName, builder.factory, builder.databaseVersion);
 
         this.builder = builder;
     }
 
-    public String getDatabaseName(){
-        return builder.databaseName;
-    }
-
+    /**
+     * Database version.
+     *
+     * @return the version of database SQLite.
+     */
     public int getDatabaseVersion(){
         return builder.databaseVersion;
     }
 
+    /**
+     * If the foreign keys in SQLite are enable.
+     *
+     * @return true if the foreign keys are enable or false if it is not the case.
+     */
     public boolean isOnForeignKey(){
         return builder.isOnForeignKey;
     }
 
+    private void executePragma(SQLiteDatabase db){
+        if (builder.isOnForeignKey) db.execSQL(Builder.FOREIGN_KEY_ON);
+    }
+
+    /**
+     * Called when the database is created for the first time. This is where the
+     * creation of tables and the initial population of the tables should happen.
+     *
+     * @param db The database.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
+            if(builder.tables == null){
+                throw new SQLiteHelperException("The array of String tables can't be null!!");
+            }
+            executePragma(db);
+
             builder.onCreateCallback.onCreate(db);
         } catch (SQLiteHelperException e) {
             Log.e(this.getClass().toString(), Log.getStackTraceString(e), e);
         }
     }
 
+    /**
+     * Called when the database needs to be upgraded. The implementation
+     * should use this method to drop tables, add tables, or do anything else it
+     * needs to upgrade to the new schema version.
+     *
+     *
+     * @param db The database.
+     * @param oldVersion The old database version.
+     * @param newVersion The new database version.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
-            builder.onUpdateCallback.onUpdate(db, oldVersion, newVersion);
+            if (builder.tableNames == null) {
+                throw new SQLiteHelperException("The array of String tableNames can't be null!!");
+            }
+
+            builder.onUpgradeCallback.onUpgrade(db, oldVersion, newVersion);
         } catch (SQLiteHelperException e) {
             Log.e(this.getClass().toString(), Log.getStackTraceString(e), e);
         }
     }
 
+    /**
+     * Build SQLiteHelper.
+     *
+     * @return The new SQLiteHelperBuilder.
+     */
     public static Builder builder(){
         return new Builder();
     }
@@ -65,25 +105,36 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         private String[] tableNames;
 
         private OnCreateCallback onCreateCallback;
-        private OnUpdateCallback onUpdateCallback;
+        private onUpgradeCallback onUpgradeCallback;
 
         private boolean isOnForeignKey;
 
-        final private String FOREIGN_KEY_ON = "PRAGMA foreign_keys = ON";
-        final private String DROP = "DROP TABLE IF EXISTS ";
+        final static public String FOREIGN_KEY_ON = "PRAGMA foreign_keys = ON";
+        final static public String DROP = "DROP TABLE IF EXISTS ";
 
-        public Builder() {
+        private Builder() {
             this.context = null;
             this.databaseName = "com.sqlitedatabase";
             this.databaseVersion = 1;
             this.factory = null;
-            this.onUpdateCallback = this;
+            this.onUpgradeCallback = this;
             this.onCreateCallback = this;
 
             //config
             this.isOnForeignKey = false;
         }
 
+        /**
+         * Build the SQLiteHelper with SQLiteDatabase.CursorFactory factory.
+         *
+         * @param context to use to open or create the database
+         * @param databaseName of the database file, or null for an in-memory database
+         * @param factory to use for creating cursor objects, or null for the default
+         * @param databaseVersion number of the database (starting at 1); if the database is older,
+         *     {@link #onUpgrade} will be used to upgrade the database; if the database is
+         *     newer, {@link #onDowngrade} will be used to downgrade the database
+         * @return new SQLiteHelper
+         */
         @Override
         public SQLiteHelper build(Context context, String databaseName,
                                   SQLiteDatabase.CursorFactory factory, int databaseVersion) {
@@ -94,6 +145,17 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             return new SQLiteHelper(this);
         }
 
+        /**
+         * Build the SQLiteHelper with the minimum information, SQLiteDatabase.CursorFactory by default
+         * is null.
+         *
+         * @param context to use to open or create the database
+         * @param databaseName of the database file, or null for an in-memory database
+         * @param databaseVersion number of the database (starting at 1); if the database is older,
+         *     {@link #onUpgrade} will be used to upgrade the database; if the database is
+         *     newer, {@link #onDowngrade} will be used to downgrade the database
+         * @return new SQLiteHelper
+         */
         @Override
         public SQLiteHelper build(Context context, String databaseName, int databaseVersion) {
             this.context = context;
@@ -102,70 +164,124 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             return new SQLiteHelper(this);
         }
 
+        /**
+         * Build the SQLiteHelper with the default values.
+         *
+         * The default values:
+         *
+         *      -  Database name: com.sqlitedatabase
+         *
+         *      -  Database version: 1
+         *
+         * If you wish increment the version, you must use the method {@link #version(int)}
+         *
+         * @param context to use to open or create the database
+         * @return new SQLiteHelper
+         */
         @Override
         public SQLiteHelper build(Context context) {
             this.context = context;
             return new SQLiteHelper(this);
         }
 
-
+        /**
+         * Set the create tables of database, this method is very important.
+         *
+         * Important:
+         *
+         *      -  The tables in database must be sorted in order of creation,
+         *         to avoid problems with the foreign keys!.
+         *
+         *      -  The array of tables cannot be null.
+         *
+         * @param tables array of tables
+         * @return SQLiteHelperBuilder with new set tables
+         */
         @Override
         public SQLiteHelperBuilder tables(String[] tables) {
             this.tables = tables;
             return this;
         }
 
+        /**
+         * Set the table names of database, this method is very important.
+         *
+         * Important:
+         *
+         *      -  The tables in database must be sorted in opposite order
+         *         by the array of creation tables.
+         *
+         *      -  The array of table names cannot be null.
+         *
+         * @param tableNames array of table names
+         * @return SQLiteHelperBuilder with new set table names
+         */
         @Override
         public SQLiteHelperBuilder tableNames(String[] tableNames) {
             this.tableNames = tableNames;
             return this;
         }
 
+        /**
+         * Set the version value of database.
+         *
+         * @param version number of the database (starting at 1); if the database is older,
+         *     {@link #onUpgrade} will be used to upgrade the database; if the database is
+         *     newer, {@link #onDowngrade} will be used to downgrade the database
+         * @return SQLiteHelperBuilder with new set version
+         */
         @Override
         public SQLiteHelperBuilder version(int version) {
             this.databaseVersion = version;
             return this;
         }
 
+        /**
+         * Set the name value of database.
+         *
+         * @param name of the database file, or null for an in-memory database
+         * @return SQLiteHelperBuilder with new set name
+         */
         @Override
         public SQLiteHelperBuilder name(String name) {
             this.databaseName = name;
             return this;
         }
 
-        private void executePragma(SQLiteDatabase db){
-            if (isOnForeignKey) db.execSQL(FOREIGN_KEY_ON);
+        /**
+         * Set the SQLiteDatabase.CursorFactory.
+         *
+         * @param factory to use for creating cursor objects
+         * @return SQLiteHelperBuilder with new set factory
+         */
+        @Override
+        public SQLiteHelperBuilder factory(SQLiteDatabase.CursorFactory factory) {
+            this.factory = factory;
+            return this;
         }
 
-        //Events
+        /**
+         * It is a default implementation of onCreate, only creates all tables.
+         *
+         * @param db The database.
+         * @throws SQLiteHelperException
+         */
         @Override
         public void onCreate(SQLiteDatabase db) throws SQLiteHelperException {
-            if(tables == null){
-                throw new SQLiteHelperException("The array of String tables can't be null!!");
-            }
-
-            executePragma(db);
-
             for (String table : tables) {
                 db.execSQL(table);
             }
         }
 
         /**
-         * It is a default implementation of onUpdate.
+         * It is a default implementation of onUpgrade, only remove all tables and re-create the tables.
          *
-         *
-         * @param db SQLiteDatabase db
-         * @param oldVerison int Old version
+         * @param db The database.
+         * @param oldVersion int Old version
          * @param newVersion int New version
          */
         @Override
-        public void onUpdate(SQLiteDatabase db, int oldVerison, int newVersion) throws SQLiteHelperException {
-            if (tableNames == null) {
-                throw new SQLiteHelperException("The array of String tableNames can't be null!!");
-            }
-
-
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) throws SQLiteHelperException {
             for (int i = tableNames.length-1; i >= 0; i--) {
                 db.execSQL(DROP + tableNames[i]);
             }
@@ -173,37 +289,70 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             onCreateCallback.onCreate(db);
         }
 
-        //Config
+        /**
+         * Begin the Builder configuration.
+         *
+         * @return ConfigBuilder
+         */
         @Override
         public ConfigBuilder beginConfig() {
             return this;
         }
 
+        /**
+         * Set the isOnForeignKey value, if you need to link tables.
+         *
+         * @param isOnForeignKey
+         * @return ConfigBuilder
+         */
         @Override
         public ConfigBuilder foreignKey(boolean isOnForeignKey) {
             this.isOnForeignKey = isOnForeignKey;
             return this;
         }
 
+        /**
+         * If you need change the default methods onCreate and onUpgrade.
+         * 
+         * @param callback SQLiteHelperCallback interface contains onCreate and onUpgrade methods.
+         * @return ConfigBuilder
+         */
         @Override
         public ConfigBuilder helperCallback(SQLiteHelperCallback callback) {
             this.onCreateCallback = callback;
-            this.onUpdateCallback = callback;
+            this.onUpgradeCallback = callback;
             return this;
         }
 
+        /**
+         * If you need change only the method onCreate, use this method.
+         *
+         * @param onCreateCallback OnCreateCallback interface contains onCreate method.
+         * @return ConfigBuilder
+         */
         @Override
         public ConfigBuilder onCreateCallback(OnCreateCallback onCreateCallback) {
             this.onCreateCallback = onCreateCallback;
             return this;
         }
 
+        /**
+         * If you need change only the method onUpgrade, use this method.
+         *
+         * @param onUpgradeCallback OnUpgradeCallback interface contains onUpgrade method.
+         * @return ConfigBuilder
+         */
         @Override
-        public ConfigBuilder onUpdateCallback(OnUpdateCallback onUpdateCallback) {
-            this.onUpdateCallback = onUpdateCallback;
+        public ConfigBuilder onUpgradeCallback(onUpgradeCallback onUpgradeCallback) {
+            this.onUpgradeCallback = onUpgradeCallback;
             return this;
         }
 
+        /**
+         * End the configuration.
+         *
+         * @return SQLiteHelperBuilder
+         */
         @Override
         public SQLiteHelperBuilder endConfig() {
             return this;
@@ -214,11 +363,11 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         public void onCreate(SQLiteDatabase db) throws SQLiteHelperException;
     }
 
-    public interface OnUpdateCallback{
-        public void onUpdate(SQLiteDatabase db, int oldVerison, int newVersion) throws SQLiteHelperException;
+    public interface onUpgradeCallback{
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) throws SQLiteHelperException;
     }
 
-    public interface SQLiteHelperCallback extends  OnCreateCallback, OnUpdateCallback{
+    public interface SQLiteHelperCallback extends  OnCreateCallback, onUpgradeCallback{
     }
 
     public interface SQLiteBuilder {
@@ -232,10 +381,9 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
     public interface ConfigBuilder{
         public ConfigBuilder foreignKey(boolean onOff);
-        public ConfigBuilder beginConfig();
         public ConfigBuilder helperCallback(SQLiteHelperCallback callback);
         public ConfigBuilder onCreateCallback(OnCreateCallback onCreateCallback);
-        public ConfigBuilder onUpdateCallback(OnUpdateCallback onUpdateCallback);
+        public ConfigBuilder onUpgradeCallback(onUpgradeCallback onUpgradeCallback);
         public SQLiteHelperBuilder endConfig();
     }
 
@@ -246,5 +394,6 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         public SQLiteHelperBuilder tableNames(String [] tableNames);
         public SQLiteHelperBuilder version(int version);
         public SQLiteHelperBuilder name(String name);
+        public SQLiteHelperBuilder factory(SQLiteDatabase.CursorFactory factory);
     }
 }
