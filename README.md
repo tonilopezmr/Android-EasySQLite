@@ -207,13 +207,13 @@ private static SQLiteHelper.SQLiteHelperCallback helperCallback = new SQLiteHelp
 };
 
 SQLiteHelper helper = SQLiteHelper.builder()
-     	.beginConfig()
+	.beginConfig()
                 .helperCallback(helperCallback)
                 .foreignKey(true)		//PRAGMA foreign_keys = ON
-        .endConfig()
+	.endConfig()
 	.tables(TABLES)
- 	.tableNames(TABLENAMES)
- 	.build(context, DATABASE_NAME, cursorFactory, SQLITE_VERSION);
+	.tableNames(TABLENAMES)
+	.build(context, DATABASE_NAME, cursorFactory, SQLITE_VERSION);
 ```
 
 If you need change only the method `onCreate` or `onUpgrade`, use `onCreateCallback(OnCreateCallback callback)` or `onUpgradeCallback(OnUpgradeCallback callback)`.
