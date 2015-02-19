@@ -2,7 +2,7 @@
 
 Use easily the database SQLite on android using the DAO and transformer design patterns, I modified the library of professor [@jvprofe][11], I learned from him.
 
-Basic methods are already implemented in the class SQLiteDelegate<T>, if you need further queries you should extend from it.
+Basic methods are already implemented in the class `SQLiteDelegate<T>`, if you need further queries you should extend from it.
 
 #How to use
 
@@ -75,7 +75,7 @@ compile 'com.github.tonilopezmr:easysqlite:2.0.0'
 ```
 ####2. Create the object DAO which extends SQLiteDelegate<T>
 
-The SQLiteDelegate<T> has implemented the following methods:
+The `SQLiteDelegate<T>` has implemented the following methods:
 
     //Default methods implement with SQLiteDelegate
     T create(T dto)
@@ -168,7 +168,7 @@ SQLiteHelper helper = SQLiteHelper.builder()
  	
 SQLiteDatabase dataBase = helper.getWritableDatabase(); 	
 ```
-In this case, the name and version of the database by default are Name: com.easysqlite and Version: 1. For put the name and version you can do:
+In this case, the name and version of the database by default are Name: `com.easysqlite` and Version: `1`. For put the name and version you can do:
 
 ```java
 SQLiteHelper helper = SQLiteHelper.builder()
@@ -216,12 +216,12 @@ SQLiteHelper helper = SQLiteHelper.builder()
  	.build(context, DATABASE_NAME, cursorFactory, SQLITE_VERSION);
 ```
 
-If you need change only the method onCreate or Upgrade, use onCreateCallback(OnCreateCallback callback) or onUpgradeCallback(OnUpgradeCallback callback).
+If you need change only the method `onCreate` or `onUpgrade`, use `onCreateCallback(OnCreateCallback callback)` or `onUpgradeCallback(OnUpgradeCallback callback)`.
 
 
 Sample Clean architecture
 -------------------------
-The code which uses this library is in the package 'com.tonilopezmr.sample.data.SQLite'.
+The code which uses this library is in the package `'com.tonilopezmr.sample.data.SQLite'`.
 
 I use the Clean architecture with the pattern MVP, I have been motivated for the speaker [pedrovgs][10] in DroidCon 2014.
 
