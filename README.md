@@ -145,6 +145,80 @@ The SQLiteDelegate<T> has implemented the following methods:
     
 ```
 
+Use the SQLiteHelper and get rid of SQLiteOpenHelper
+---------------------------------------------------
+
+####If you need one simple database: 
+
+```java
+final private String SUBJECT_TABLE =
+        "CREATE TABLE SUBJECT(" +
+	        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+	        "NAME TEXT NOT NULL" +
+        ")";
+final private String SUBJECT = "SUBJECT";
+
+final private String[] TABLES = {SUBJECT_TABLE};
+final private String[] TABLENAMES = {SUBJECT};
+
+SQLiteHelper helper = SQLiteHelper.builder()
+	.tables(TABLES)
+ 	.tableNames(TABLENAMES)
+ 	.build(context);
+ 	
+SQLiteDatabase dataBase = helper.getWritableDatabase(); 	
+```
+In this case, the name and version of the database by default are Name: com.easysqlite and Version: 1. For put the name and version you can do:
+
+```java
+SQLiteHelper helper = SQLiteHelper.builder()
+	.tables(TABLES)
+ 	.tableNames(TABLENAMES)
+ 	.build(context, DATABASE_NAME, SQLITE_VERSION);
+```
+
+OR
+
+```java
+SQLiteHelper helper = SQLiteHelper.builder()
+	.tables(TABLES)
+ 	.tableNames(TABLENAMES)
+ 	.name(DATABASE_NAME)
+ 	.version(DATABASE_VERSION)
+ 	.build(context);
+```
+
+####If you need one custom implementation
+
+```java
+private static SQLiteHelper.SQLiteHelperCallback helperCallback = new SQLiteHelper.SQLiteHelperCallback() {
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL(SUBJECT_TABLE);
+            db.execSQL("INSERT INTO "+SUBJECT+"(name) VALUES ('Maths')");
+            
+            ...
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            ...	
+        }
+};
+
+SQLiteHelper helper = SQLiteHelper.builder()
+     	.beginConfig()
+                .helperCallback(helperCallback)
+                .foreignKey(true)		//PRAGMA foreign_keys = ON
+        .endConfig()
+	.tables(TABLES)
+ 	.tableNames(TABLENAMES)
+ 	.build(context, DATABASE_NAME, cursorFactory, SQLITE_VERSION);
+```
+
+If you need change only the method onCreate or Upgrade, use onCreateCallback(OnCreateCallback callback) or onUpgradeCallback(OnUpgradeCallback callback).
+
+
 Sample Clean architecture
 -------------------------
 The code which uses this library is in the package 'com.tonilopezmr.sample.data.SQLite'.
