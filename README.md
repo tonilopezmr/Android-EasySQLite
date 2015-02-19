@@ -208,8 +208,8 @@ private static SQLiteHelper.SQLiteHelperCallback helperCallback = new SQLiteHelp
 
 SQLiteHelper helper = SQLiteHelper.builder()
 	.beginConfig()
-                .helperCallback(helperCallback)
-                .foreignKey(true)		//PRAGMA foreign_keys = ON
+		.helperCallback(helperCallback)
+		.foreignKey(true)		//PRAGMA foreign_keys = ON
 	.endConfig()
 	.tables(TABLES)
 	.tableNames(TABLENAMES)
