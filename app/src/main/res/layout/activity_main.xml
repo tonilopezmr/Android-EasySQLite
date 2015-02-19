@@ -9,10 +9,17 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <ProgressBar
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progress_bar"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_centerInParent="true"/>-->
+
+    <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
         android:id="@+id/progress_bar"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="#ff6acbe5"
         android:layout_centerInParent="true"/>
 
     <LinearLayout

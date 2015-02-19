@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.tonilopezmr.sample.R;
 import com.tonilopezmr.sample.di.BaseActivity;
@@ -36,7 +37,7 @@ public class MainActivity extends BaseActivity implements SubjectListView {
     @InjectView(R.id.my_recycler_view)
     RecyclerView recyclerView;
     @InjectView(R.id.progress_bar)
-    ProgressBar progressBar;
+    ProgressBarCircularIndeterminate progressBar;
     @InjectView(R.id.layout_error)
     LinearLayout layoutError;
     @InjectView(R.id.floating_button)
