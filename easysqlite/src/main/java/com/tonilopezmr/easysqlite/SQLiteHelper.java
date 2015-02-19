@@ -120,7 +120,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
         private String[] tableNames;
 
         private OnCreateCallback onCreateCallback;
-        private onUpgradeCallback onUpgradeCallback;
+        private OnUpgradeCallback onUpgradeCallback;
 
         private boolean isOnForeignKey;
 
@@ -129,7 +129,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
 
         private Builder() {
             this.context = null;
-            this.databaseName = "com.sqlitedatabase";
+            this.databaseName = "com.easysqlite";
             this.databaseVersion = 1;
             this.factory = null;
             this.onUpgradeCallback = this;
@@ -357,7 +357,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
          * @return ConfigBuilder
          */
         @Override
-        public ConfigBuilder onUpgradeCallback(onUpgradeCallback onUpgradeCallback) {
+        public ConfigBuilder onUpgradeCallback(OnUpgradeCallback onUpgradeCallback) {
             this.onUpgradeCallback = onUpgradeCallback;
             return this;
         }
@@ -377,11 +377,11 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
         public void onCreate(SQLiteDatabase db);
     }
 
-    public interface onUpgradeCallback{
+    public interface OnUpgradeCallback{
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
     }
 
-    public interface SQLiteHelperCallback extends  OnCreateCallback, onUpgradeCallback{
+    public interface SQLiteHelperCallback extends  OnCreateCallback, OnUpgradeCallback{
     }
 
     public interface SQLiteBuilder {
@@ -397,7 +397,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
         public ConfigBuilder foreignKey(boolean onOff);
         public ConfigBuilder helperCallback(SQLiteHelperCallback callback);
         public ConfigBuilder onCreateCallback(OnCreateCallback onCreateCallback);
-        public ConfigBuilder onUpgradeCallback(onUpgradeCallback onUpgradeCallback);
+        public ConfigBuilder onUpgradeCallback(OnUpgradeCallback onUpgradeCallback);
         public SQLiteHelperBuilder endConfig();
     }
 

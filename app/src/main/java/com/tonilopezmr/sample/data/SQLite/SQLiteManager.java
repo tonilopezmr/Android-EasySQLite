@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.tonilopezmr.easysqlite.SQLiteHelper;
-import com.tonilopezmr.easysqlite.exception.SQLiteHelperException;
 
 /**
  *
@@ -38,6 +37,7 @@ public class SQLiteManager {
             SQLiteHelper conex = SQLiteHelper.builder()
                     .beginConfig()
                         .onCreateCallback(onCreateCallback)
+                        .foreignKey(true)
                     .endConfig()
                     .tables(TABLES)
                     .tableNames(TABLENAMES)
