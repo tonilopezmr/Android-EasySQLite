@@ -8,6 +8,4 @@ public interface Presenter {
     public void onInit();
 
     public void onViewDestroy();
-
-
 }

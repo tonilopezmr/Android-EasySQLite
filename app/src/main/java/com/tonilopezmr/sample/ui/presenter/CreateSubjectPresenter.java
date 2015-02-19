@@ -8,5 +8,4 @@ import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 public interface CreateSubjectPresenter extends Presenter{
 
     public void onFloatingButtonClick(SubjectViewModel subjectViewModel);
-
 }
