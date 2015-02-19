@@ -188,7 +188,7 @@ SQLiteHelper helper = SQLiteHelper.builder()
  	.build(context);
 ```
 
-####If you need one custom implementation
+####If you need one custom implementation:
 
 ```java
 private static SQLiteHelper.SQLiteHelperCallback helperCallback = new SQLiteHelper.SQLiteHelperCallback() {
@@ -251,7 +251,7 @@ If anything is wrong contact me
   <img alt="Add me to Linkedin" src="https://cdn3.iconfinder.com/data/icons/free-social-icons/67/linkedin_circle_black-128.png" width="60" height="60"/>
 </a>
 
-####Sorry for my English :(
+######Sorry for my English :(
 
 License
 -------
