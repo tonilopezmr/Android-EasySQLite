@@ -12,8 +12,7 @@ import com.tonilopezmr.easysqlite.SQLiteHelper;
  */
 public class SQLiteManager {
 
-    public final static String DATABASE_NAME = "com.tonilopezmr.sample.database";
-    public final static int SQLITE_VERSION = 12;
+    public final static int SQLITE_VERSION = 1;
 
 
     private static final String SUBJECT_TABLE =
@@ -41,7 +40,8 @@ public class SQLiteManager {
                     .endConfig()
                     .tables(TABLES)
                     .tableNames(TABLENAMES)
-                    .build(context, DATABASE_NAME, SQLITE_VERSION);
+                    .version(SQLITE_VERSION)
+                    .build(context);
             dataBase = conex.getWritableDatabase();
         }
         return  dataBase;
