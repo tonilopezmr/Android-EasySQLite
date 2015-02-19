@@ -7,5 +7,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="error">Oops Random example Error!</string>
     <string name="desc">desc</string>
+    <string name="retry">Retry</string>
 
 </resources>

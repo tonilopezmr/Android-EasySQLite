@@ -8,7 +8,8 @@
         android:icon="@drawable/ic_launcher">
         <activity
             android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

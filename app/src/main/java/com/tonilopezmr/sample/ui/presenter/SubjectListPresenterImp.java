@@ -96,11 +96,10 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
         });
     }
 
-    private void hideLayoutError(){
-        if (view.isShowLayoutError()){
-            onInit();
-            view.hideLayoutError();
-        }
+    @Override
+    public void onRetryButtonClick() {
+        view.hideLayoutError();
+        onInit();
     }
 
     @Override
@@ -108,7 +107,6 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
         createSubjectUseCase.execute(new Subject(subjectModel.getName()), new SubjectUseCase.Callback() {
             @Override
             public void onMissionAccomplished(Subject subject) {
-                hideLayoutError();
                 view.add(new SubjectViewModelImp(subject));
                 view.showMessage("Create new subject number "+subject.getId());
             }

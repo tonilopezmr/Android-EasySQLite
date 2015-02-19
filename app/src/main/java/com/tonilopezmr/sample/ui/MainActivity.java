@@ -1,6 +1,7 @@
 package com.tonilopezmr.sample.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -39,6 +41,8 @@ public class MainActivity extends BaseActivity implements SubjectListView {
     LinearLayout layoutError;
     @InjectView(R.id.floating_button)
     FloatingActionButton floatingButton;
+    @InjectView(R.id.retry_btn)
+    Button retryButton;
 
     MyRecyclerAdapter adapter;
 
@@ -61,11 +65,18 @@ public class MainActivity extends BaseActivity implements SubjectListView {
                 presenter.onFloatingButtonClick(new SubjectViewModelImp("New Subject"));
             }
         });
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onRetryButtonClick();
+            }
+        });
 
         presenter.onInit();
     }
 
     private void inicializeRecyclerView(RecyclerView recyclerView){
+        recyclerView.setHasFixedSize(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -125,6 +136,7 @@ public class MainActivity extends BaseActivity implements SubjectListView {
     @Override
     public void hideLayoutError() {
         layoutError.setVisibility(View.INVISIBLE);
+        floatingButton.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -137,6 +149,7 @@ public class MainActivity extends BaseActivity implements SubjectListView {
 
     @Override
     public void showProgress() {
+        floatingButton.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         layoutError.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -145,7 +158,8 @@ public class MainActivity extends BaseActivity implements SubjectListView {
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.INVISIBLE);
-        recyclerView.setVisibility(android.view.View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        floatingButton.setVisibility(View.VISIBLE);
     }
 
     @Override
