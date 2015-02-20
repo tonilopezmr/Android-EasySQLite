@@ -206,6 +206,9 @@ private static SQLiteHelper.SQLiteHelperCallback helperCallback = new SQLiteHelp
         }
 };
 
+```
+
+```java
 SQLiteHelper helper = SQLiteHelper.builder()
 	.beginConfig()
 		.helperCallback(helperCallback)
