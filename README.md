@@ -168,16 +168,16 @@ final private String[] TABLE_NAMES = {SUBJECT};
 
 Important: 
 
-	- The array `TABLES` in database must be sorted in order of creation, to avoid problems with the foreign keys!.
+- The array `TABLES` in database must be sorted in order of creation, to avoid problems with the foreign keys!.
 
-	- The array tables in database must be sorted in opposite order by the array of creation tables, for example:
+- The array tables in database must be sorted in opposite order by the array of creation tables, for example:
 	
-		```java		
-		final private String[] TABLES = {SUBJECT_TABLE, EXAM_TABLE, PROFESSOR_TABLE};
-		//Very important, sorted in opposite order.
-		final private String[] TABLE_NAMES = {PROFESSOR, EXAM, SUBJECT_TABLE};  
-		```
-		
+```java		
+final private String[] TABLES = {SUBJECT_TABLE, EXAM_TABLE, PROFESSOR_TABLE};
+//Very important, sorted in opposite order.
+inal private String[] TABLE_NAMES = {PROFESSOR, EXAM, SUBJECT_TABLE};  
+```
+
 Create SQLiteHelper:
 
 ```java	
