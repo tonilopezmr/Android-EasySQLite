@@ -15,11 +15,11 @@ if (isReleaseBuild()) {
 }
 
 def getRepositoryUsername() {
-    return hasProperty('nexusUsername') ? nexusUsername : "pinva"
+    return hasProperty('nexusUsername') ? nexusUsername : ""
 }
 
 def getRepositoryPassword() {
-    return hasProperty('nexusPassword') ? nexusPassword : "etsinf;toni"
+    return hasProperty('nexusPassword') ? nexusPassword : ""
 }
 
 afterEvaluate { project ->

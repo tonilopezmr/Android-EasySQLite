@@ -1,7 +1,5 @@
 package com.tonilopezmr.sample.executor;
 
-import com.tonilopezmr.sample.domain.interactor.Interactor;
-
 /**
  * @author toni.
  */
