@@ -223,7 +223,7 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
          *
          * Important:
          *
-         *      -  The tables in database must be sorted in opposite order
+         *      -  The table names in database must be sorted in opposite order
          *         by the array of creation tables.
          *
          *      -  The array of table names cannot be null.

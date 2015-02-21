@@ -151,29 +151,50 @@ Use the SQLiteHelper and get rid of SQLiteOpenHelper
 ####If you need one simple database: 
 
 ```java
+//Create table
 final private String SUBJECT_TABLE =
         "CREATE TABLE SUBJECT(" +
 	        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
 	        "NAME TEXT NOT NULL" +
         ")";
+
+//Table name        
 final private String SUBJECT = "SUBJECT";
 
 final private String[] TABLES = {SUBJECT_TABLE};
-final private String[] TABLENAMES = {SUBJECT};
+final private String[] TABLE_NAMES = {SUBJECT};
+	
+```
 
+Important: 
+
+	- The array `TABLES` in database must be sorted in order of creation, to avoid problems with the foreign keys!.
+
+	- The array tables in database must be sorted in opposite order by the array of creation tables, for example:
+	
+		```java		
+		final private String[] TABLES = {SUBJECT_TABLE, EXAM_TABLE, PROFESSOR_TABLE};
+		//Very important, sorted in opposite order.
+		final private String[] TABLE_NAMES = {PROFESSOR, EXAM, SUBJECT_TABLE};  
+		```
+		
+Create SQLiteHelper:
+
+```java	
 SQLiteHelper helper = SQLiteHelper.builder()
 	.tables(TABLES)
- 	.tableNames(TABLENAMES)
+ 	.tableNames(TABLE_NAMES)
  	.build(context);
  	
-SQLiteDatabase dataBase = helper.getWritableDatabase(); 	
+SQLiteDatabase dataBase = helper.getWritableDatabase(); 
 ```
+
 In this case, the name and version of the database by default are Name: `com.easysqlite` and Version: `1`. For put the name and version you can do:
 
 ```java
 SQLiteHelper helper = SQLiteHelper.builder()
 	.tables(TABLES)
- 	.tableNames(TABLENAMES)
+ 	.tableNames(TABLE_NAMES)
  	.build(context, DATABASE_NAME, SQLITE_VERSION);
 ```
 
@@ -182,7 +203,7 @@ OR
 ```java
 SQLiteHelper helper = SQLiteHelper.builder()
 	.tables(TABLES)
- 	.tableNames(TABLENAMES)
+ 	.tableNames(TABLE_NAMES)
  	.name(DATABASE_NAME)
  	.version(DATABASE_VERSION)
  	.build(context);
@@ -215,7 +236,7 @@ SQLiteHelper helper = SQLiteHelper.builder()
 		.foreignKey(true)		//PRAGMA foreign_keys = ON
 	.endConfig()
 	.tables(TABLES)
-	.tableNames(TABLENAMES)
+	.tableNames(TABLE_NAMES)
 	.build(context, DATABASE_NAME, cursorFactory, SQLITE_VERSION);
 ```
 

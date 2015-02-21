@@ -24,7 +24,7 @@ public class SQLiteManager {
     final static private String SUBJECT = "SUBJECT";
 
     final static private String[] TABLES = {SUBJECT_TABLE};
-    final static private String[] TABLENAMES = {SUBJECT};
+    final static private String[] TABLE_NAMES = {SUBJECT};
 
     private static SQLiteDatabase dataBase;
 
@@ -32,14 +32,14 @@ public class SQLiteManager {
 
     public static SQLiteDatabase getDataBase(Context context){
         if (dataBase == null){
-            //Create the SQLiteOpenHelper
+            //Create the SQLiteOpenHelper with the default name
             SQLiteHelper conex = SQLiteHelper.builder()
                     .beginConfig()
                         .onCreateCallback(onCreateCallback)
                         .foreignKey(true)
                     .endConfig()
                     .tables(TABLES)
-                    .tableNames(TABLENAMES)
+                    .tableNames(TABLE_NAMES)
                     .version(SQLITE_VERSION)
                     .build(context);
             dataBase = conex.getWritableDatabase();
