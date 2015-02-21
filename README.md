@@ -175,7 +175,7 @@ Important:
 ```java		
 final private String[] TABLES = {SUBJECT_TABLE, EXAM_TABLE, PROFESSOR_TABLE};
 //Very important, sorted in opposite order.
-inal private String[] TABLE_NAMES = {PROFESSOR, EXAM, SUBJECT_TABLE};  
+final private String[] TABLE_NAMES = {PROFESSOR, EXAM, SUBJECT_TABLE};  
 ```
 
 Create SQLiteHelper:
