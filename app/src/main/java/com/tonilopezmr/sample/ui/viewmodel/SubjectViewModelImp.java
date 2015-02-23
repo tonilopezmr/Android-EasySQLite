@@ -7,24 +7,22 @@ import com.tonilopezmr.sample.domain.Subject;
  */
 public class SubjectViewModelImp implements SubjectViewModel {
 
-    private int id;
-    private String name;
+    private Subject subject;
 
     public SubjectViewModelImp(String name) {
-        this.name = name;
+        subject = new Subject(name);
     }
 
     public SubjectViewModelImp(Subject subject) {
-        this.id = subject.getId();
-        this.name = subject.getName();
+        this.subject = subject;
     }
 
     public int getId(){
-        return this.id;
+        return this.subject.getId();
     }
 
     public String getName(){
-        return this.name;
+        return this.subject.getName();
     }
 
     @Override
@@ -32,7 +30,7 @@ public class SubjectViewModelImp implements SubjectViewModel {
         boolean result = false;
         if (o instanceof SubjectViewModel){
             SubjectViewModel model = (SubjectViewModel)o;
-            if (this.id == model.getId() && this.name.equals(model.getName())){
+            if (this.subject.getId() == model.getId() && this.subject.getName().equals(model.getName())){
                 result = true;
             }
         }
@@ -41,6 +39,6 @@ public class SubjectViewModelImp implements SubjectViewModel {
 
     @Override
     public String toString() {
-        return id+" "+name;
+        return subject.getId()+" "+subject.getName();
     }
 }

@@ -14,7 +14,6 @@ public class SQLiteManager {
 
     public final static int SQLITE_VERSION = 1;
 
-
     private static final String SUBJECT_TABLE =
             "CREATE TABLE SUBJECT(" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT," +

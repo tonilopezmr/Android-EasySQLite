@@ -1,5 +1,7 @@
 package com.tonilopezmr.sample.domain;
 
+import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
+
 /**
  * @author toni.
  */
