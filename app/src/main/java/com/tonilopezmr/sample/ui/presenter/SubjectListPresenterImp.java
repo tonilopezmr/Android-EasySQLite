@@ -1,5 +1,6 @@
 package com.tonilopezmr.sample.ui.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.tonilopezmr.sample.di.BasePresenter;
@@ -24,22 +25,23 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
 
     private SubjectListView view;
 
-    @Inject
-    GetSubjectListUseCase subjectListUseCase;
+    private GetSubjectListUseCase subjectListUseCase;
+    private SubjectUseCase createSubjectUseCase;
+    private SubjectUseCase deleteSubjectUseCase;
 
-    @Named("create usecase")
-    @Inject
-    SubjectUseCase createSubjectUseCase;
-
-    @Named("delete usecase")
-    @Inject
-    SubjectUseCase deleteSubjectUseCase;
-
-    public SubjectListPresenterImp(SubjectListView view) {
-        super(view.getContext());
-        this.view = view;
+    public SubjectListPresenterImp(Context context, GetSubjectListUseCase subjectListUseCase,
+                                   @Named("create usecase") SubjectUseCase createSubjectUseCase,
+                                   @Named("delete usecase") SubjectUseCase deleteSubjectUseCase) {
+        super(context);
+        this.createSubjectUseCase = createSubjectUseCase;
+        this.deleteSubjectUseCase = deleteSubjectUseCase;
+        this.subjectListUseCase = subjectListUseCase;
     }
 
+    @Override
+    public void setView(SubjectListView view){
+        this.view = view;
+    }
 
     @Override
     public void onInit() {
@@ -118,8 +120,4 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
         });
     }
 
-    @Override
-    public void onViewDestroy() {
-
-    }
 }

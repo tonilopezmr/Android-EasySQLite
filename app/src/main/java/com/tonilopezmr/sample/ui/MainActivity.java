@@ -1,7 +1,5 @@
 package com.tonilopezmr.sample.ui;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
@@ -19,7 +16,6 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.tonilopezmr.sample.R;
 import com.tonilopezmr.sample.di.BaseActivity;
 import com.tonilopezmr.sample.ui.presenter.MainPresenter;
-import com.tonilopezmr.sample.ui.presenter.SubjectListPresenterImp;
 import com.tonilopezmr.sample.ui.view.SubjectListView;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModelImp;
@@ -27,11 +23,14 @@ import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModelImp;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MainActivity extends BaseActivity implements SubjectListView {
 
+    @Inject
     MainPresenter presenter;
 
     @InjectView(R.id.my_recycler_view)
@@ -58,7 +57,7 @@ public class MainActivity extends BaseActivity implements SubjectListView {
     }
 
     private void init(){
-        presenter = new SubjectListPresenterImp(this);
+        presenter.setView(this);
 
         floatingButton.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
@@ -171,11 +170,6 @@ public class MainActivity extends BaseActivity implements SubjectListView {
     @Override
     public void showSubjects(Collection<SubjectViewModel> subjects) {
         adapter.add((List<SubjectViewModel>) subjects);
-    }
-
-    @Override
-    public Context getContext() {
-        return getApplicationContext();
     }
 
     @Override

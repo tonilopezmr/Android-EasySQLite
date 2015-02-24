@@ -14,7 +14,7 @@ public abstract class BaseActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
-//        injectViews();  //TODO no funciona en BaseActivity
+    //    injectViews();  //TODO no funciona en BaseActivity
     }
 
     private void injectDependencies() {

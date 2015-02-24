@@ -19,7 +19,8 @@ import dagger.Provides;
         includes = {
             ExecutorModule.class,
             InteractorModule.class,
-            RepositoryModule.class
+            RepositoryModule.class,
+            PresenterModule.class
         },
         injects = {
             SubjectsApplication.class,
