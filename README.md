@@ -1,6 +1,6 @@
 #EasySQLite [![Build Status](https://travis-ci.org/tonilopezmr/Android-EasySQLite.svg?branch=master)](https://travis-ci.org/tonilopezmr/Android-EasySQLite) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tonilopezmr/easysqlite/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tonilopezmr/easysqlite) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-EasySQLite-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1592)
 
-Use easily the database SQLite on android using the DAO and transformer design patterns, I modified the library of professor [@jvprofe][11], I learned from him.
+Use easily the database SQLite on android using the DAO and transformer design patterns, I modified the library of the professor [@jvprofe][11], I learned it from him.
 
 Basic methods are already implemented in the class `SQLiteDelegate<T>`, if you need further queries you should extend from it.
 
