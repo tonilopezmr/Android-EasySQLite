@@ -59,7 +59,7 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
 
         if (rowid == -1) throw new SQLiteException("Error inserting "+dto.getClass().toString());
 
-        return transformer.setId(dto, rowid);
+        return transformer.setId(dto, (int)rowid);
     }
 
 
@@ -67,13 +67,12 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
      * Convenience method for updating rows in the database.
      *
      * @param dto object
-     * @return true on success, false on failed
+     * @return the number of rows affected
      * @throws Exception on error
      */
     @Override
-    public synchronized boolean update(T dto) throws Exception {
-        int confirm = db.update(transformer.getTableName(), transformer.transform(dto),transformer.getWhereClause(dto), null);
-        return confirm!=0;
+    public synchronized int update(T dto) throws Exception {
+        return db.update(transformer.getTableName(), transformer.transform(dto),transformer.getWhereClause(dto), null);
     }
 
     /**
@@ -92,26 +91,27 @@ public class SQLiteDelegate<T> implements DataAccesObject<T> {
     /**
      * Convenience method for deleting all rows in the table of database.
      *
-     * @return true on success, false on failed
+     * @return the number of rows affected if a whereClause is passed in, 0
+     *         otherwise. To remove all rows and get a count pass "1" as the
+     *         whereClause.
      * @throws Exception on error
      */
     @Override
-    public synchronized boolean deleteAll() throws Exception {
-        int confirm = db.delete(transformer.getTableName(), null, null);
-        return confirm!=0;
+    public synchronized int deleteAll() throws Exception {
+        return db.delete(transformer.getTableName(), null, null);
     }
 
 
     /**
      * Convenience method for reading rows in the database.
      *
-     * @param id row in database
+     * @param dto row in database
      * @return T object
      * @throws Exception on error
      */
     @Override
-    public synchronized T read(T id) throws Exception {
-        Cursor cursor = db.query(transformer.getTableName(), transformer.getFields(), transformer.getWhereClause(id),null, null,null,null);
+    public synchronized T read(T dto) throws Exception {
+        Cursor cursor = db.query(transformer.getTableName(), transformer.getFields(), transformer.getWhereClause(dto),null, null,null,null);
         T object = null;
         if (cursor.moveToFirst()){
             object = transformer.transform(cursor);

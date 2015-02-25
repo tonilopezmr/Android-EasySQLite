@@ -28,7 +28,7 @@ public interface SQLiteTransformer<T> {
     public T transform(Cursor cursor) throws Exception;
     public ContentValues transform(T dto) throws Exception;
     public String getWhereClause(T dto) throws Exception;
-    public T setId(T dto, Object id) throws Exception;
+    public T setId(T dto, int id) throws Exception;
     public String[] getFields() throws Exception;
     public String getTableName() throws Exception;
 }

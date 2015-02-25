@@ -40,8 +40,8 @@ public class SubjectTransformer implements SQLiteTransformer<SubjectEntity>{
     }
 
     @Override
-    public SubjectEntity setId(SubjectEntity dto, Object id) throws Exception {
-        dto.setId((Integer.valueOf(id.toString())));
+    public SubjectEntity setId(SubjectEntity dto, int id) throws Exception {
+        dto.setId(id);
         return dto;
     }
 
