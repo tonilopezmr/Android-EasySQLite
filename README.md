@@ -79,11 +79,11 @@ The `SQLiteDelegate<T>` has implemented the following methods:
 
     //Default methods implement with SQLiteDelegate
     T create(T dto)
-    boolean update(T dto)
+    int update(T dto)
     T read(T id)
     Collection<T> readAll()
     boolean delete(T dto)
-    boolean deleteAll()
+    int deleteAll()
 
 ```java
 	public class SubjectDAO extends SQLiteDelegate<SubjectEntity> {
