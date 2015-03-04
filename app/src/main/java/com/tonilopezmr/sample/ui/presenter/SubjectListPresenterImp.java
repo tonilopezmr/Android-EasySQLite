@@ -30,8 +30,8 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
     private SubjectUseCase deleteSubjectUseCase;
 
     public SubjectListPresenterImp(Context context, GetSubjectListUseCase subjectListUseCase,
-                                   @Named("create usecase") SubjectUseCase createSubjectUseCase,
-                                   @Named("delete usecase") SubjectUseCase deleteSubjectUseCase) {
+                                   SubjectUseCase createSubjectUseCase,
+                                   SubjectUseCase deleteSubjectUseCase) {
         super(context);
         this.createSubjectUseCase = createSubjectUseCase;
         this.deleteSubjectUseCase = deleteSubjectUseCase;
