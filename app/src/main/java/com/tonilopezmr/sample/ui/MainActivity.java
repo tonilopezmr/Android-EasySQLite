@@ -15,7 +15,7 @@ import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.tonilopezmr.sample.R;
 import com.tonilopezmr.sample.di.BaseActivity;
-import com.tonilopezmr.sample.ui.presenter.MainPresenter;
+import com.tonilopezmr.sample.ui.presenter.SubjectListPresenter;
 import com.tonilopezmr.sample.ui.view.SubjectListView;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModel;
 import com.tonilopezmr.sample.ui.viewmodel.SubjectViewModelImp;
@@ -31,7 +31,7 @@ import butterknife.InjectView;
 public class MainActivity extends BaseActivity implements SubjectListView {
 
     @Inject
-    MainPresenter presenter;
+    SubjectListPresenter presenter;
 
     @InjectView(R.id.my_recycler_view)
     RecyclerView recyclerView;

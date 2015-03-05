@@ -13,4 +13,6 @@ public interface SubjectListPresenter extends Presenter{
     public void onClickItem(SubjectViewModel SubjectModel);
     public void onLongItemClick(SubjectViewModel subjectModel);
     public void onRetryButtonClick();
+
+    public void onFloatingButtonClick(SubjectViewModel subjectViewModel);
 }

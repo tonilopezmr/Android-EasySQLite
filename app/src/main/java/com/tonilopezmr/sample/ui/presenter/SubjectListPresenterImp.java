@@ -21,7 +21,7 @@ import javax.inject.Named;
 /**
  * @author toni.
  */
-public class SubjectListPresenterImp extends BasePresenter implements MainPresenter {
+public class SubjectListPresenterImp extends BasePresenter implements SubjectListPresenter {
 
     private SubjectListView view;
 
@@ -31,7 +31,7 @@ public class SubjectListPresenterImp extends BasePresenter implements MainPresen
 
     public SubjectListPresenterImp(Context context, GetSubjectListUseCase subjectListUseCase,
                                    SubjectUseCase createSubjectUseCase,
-                                   SubjectUseCase deleteSubjectUseCase) {
+                                   @Named("delete usecase") SubjectUseCase deleteSubjectUseCase) {
         super(context);
         this.createSubjectUseCase = createSubjectUseCase;
         this.deleteSubjectUseCase = deleteSubjectUseCase;

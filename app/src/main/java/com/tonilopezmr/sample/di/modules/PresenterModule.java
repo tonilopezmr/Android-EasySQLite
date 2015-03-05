@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.tonilopezmr.sample.domain.interactor.GetSubjectListUseCase;
 import com.tonilopezmr.sample.domain.interactor.SubjectUseCase;
-import com.tonilopezmr.sample.ui.presenter.MainPresenter;
+import com.tonilopezmr.sample.ui.presenter.SubjectListPresenter;
 import com.tonilopezmr.sample.ui.presenter.SubjectListPresenterImp;
 
 import javax.inject.Named;
@@ -22,7 +22,7 @@ import dagger.Provides;
 public class PresenterModule {
 
     @Provides
-    public MainPresenter provideMainPresenter(Context context, GetSubjectListUseCase subjectListUseCase,
+    public SubjectListPresenter provideMainPresenter(Context context, GetSubjectListUseCase subjectListUseCase,
                                               @Named("create usecase") SubjectUseCase createSubjectUseCase,
                                               @Named("delete usecase") SubjectUseCase deleteSubjectUseCase){
         return new SubjectListPresenterImp(context, subjectListUseCase, createSubjectUseCase, deleteSubjectUseCase);
