@@ -9,9 +9,9 @@ import com.tonilopezmr.sample.executor.MainThread;
  */
 public abstract class AbstractSubjectUseCase implements SubjectUseCase {
 
-    private Executor executor;
-    private MainThread mainThread;
-    private SubjectRepository subjectRepository;
+    protected Executor executor;
+    protected MainThread mainThread;
+    protected SubjectRepository subjectRepository;
 
     public AbstractSubjectUseCase(Executor executor, MainThread mainThread, SubjectRepository subjectRepository) {
         this.executor = executor;
@@ -19,15 +19,4 @@ public abstract class AbstractSubjectUseCase implements SubjectUseCase {
         this.subjectRepository = subjectRepository;
     }
 
-    public Executor getExecutor() {
-        return executor;
-    }
-
-    public MainThread getMainThread() {
-        return mainThread;
-    }
-
-    public SubjectRepository getSubjectRepository() {
-        return subjectRepository;
-    }
 }

@@ -21,6 +21,7 @@ public interface SubjectRepository {
     }
 
     void getSubjectsCollection(SubjectListCallback callback) throws SubjectException;
+
     void createSubject(Subject subject, SubjectUseCase callback) throws SubjectException;
     void deleteSubject(Subject subject, SubjectUseCase callback) throws  SubjectException;
 }

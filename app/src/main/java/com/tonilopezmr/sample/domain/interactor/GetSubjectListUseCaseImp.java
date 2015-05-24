@@ -14,7 +14,7 @@ import java.util.Collection;
 /**
  * @author toni.
  */
-public class GetSubjectListUseCaseImp implements GetSubjectListUseCase{
+public class GetSubjectListUseCaseImp  implements GetSubjectListUseCase{
 
 
     private SubjectRepository subjectRepository;

@@ -26,17 +26,17 @@ public class DeleteSubjectUseCaseImp extends AbstractSubjectUseCase implements S
 
         this.callback = callback;
         this.subject = subject;
-        getExecutor().run(this);
+        super.executor.run(this);
     }
 
 
     //Interactor Use case
     @Override
     public void run() {
-        getSubjectRepository().deleteSubject(subject, new SubjectRepository.SubjectUseCase() {
+        super.subjectRepository.deleteSubject(subject, new SubjectRepository.SubjectUseCase() {
             @Override
             public void onMissionAccomplished(final Subject subject) {
-                getMainThread().post(new Runnable() {
+                DeleteSubjectUseCaseImp.super.mainThread.post(new Runnable() {
                     @Override
                     public void run() {
                         callback.onMissionAccomplished(subject);
@@ -46,7 +46,7 @@ public class DeleteSubjectUseCaseImp extends AbstractSubjectUseCase implements S
 
             @Override
             public void onError(final SubjectException subjectException) {
-                getMainThread().post(new Runnable() {
+                DeleteSubjectUseCaseImp.super.mainThread.post(new Runnable() {
                     @Override
                     public void run() {
                         callback.onError(subjectException);

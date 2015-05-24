@@ -26,7 +26,7 @@ public class CreateSubjectUseCaseImp extends AbstractSubjectUseCase implements S
 
         this.callback = callback;
         this.subject = subject;
-        getExecutor().run(this);
+        super.executor.run(this);
     }
 
 
@@ -39,10 +39,10 @@ public class CreateSubjectUseCaseImp extends AbstractSubjectUseCase implements S
             e.printStackTrace();
         }
 
-        getSubjectRepository().createSubject(subject, new SubjectRepository.SubjectUseCase() {
+        super.subjectRepository.createSubject(this.subject, new SubjectRepository.SubjectUseCase() {
             @Override
             public void onMissionAccomplished(final Subject subject) {
-                getMainThread().post(new Runnable() {
+                CreateSubjectUseCaseImp.super.mainThread.post(new Runnable() {
                     @Override
                     public void run() {
                         callback.onMissionAccomplished(subject);
@@ -52,7 +52,7 @@ public class CreateSubjectUseCaseImp extends AbstractSubjectUseCase implements S
 
             @Override
             public void onError(final SubjectException subjectException) {
-                getMainThread().post(new Runnable() {
+                CreateSubjectUseCaseImp.super.mainThread.post(new Runnable() {
                     @Override
                     public void run() {
                         callback.onError(subjectException);
