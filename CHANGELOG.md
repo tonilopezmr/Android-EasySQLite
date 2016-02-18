@@ -1,5 +1,10 @@
 #Change Log
 
+Version 2.0.1 (2016-02-19)
+-------------
+
+Added the method onOpen(SQLiteDatabase) with foreign keys on.
+
 Version 2.0.1 (2015-02-25)
 -------------
 
