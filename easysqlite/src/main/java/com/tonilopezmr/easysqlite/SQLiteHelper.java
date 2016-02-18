@@ -78,6 +78,17 @@ public final class SQLiteHelper extends SQLiteOpenHelper{
     }
 
     /**
+     * Called every time.
+     *
+     * @param db
+     */
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        executePragma(db);
+    }
+
+    /**
      * Called when the database needs to be upgraded. The implementation
      * should use this method to drop tables, add tables, or do anything else it
      * needs to upgrade to the new schema version.
