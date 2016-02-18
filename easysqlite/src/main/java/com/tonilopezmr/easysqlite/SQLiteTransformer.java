@@ -25,10 +25,10 @@ import android.database.Cursor;
  * @author Antonio López Marín
  */
 public interface SQLiteTransformer<T> {
-    public T transform(Cursor cursor) throws Exception;
-    public ContentValues transform(T dto) throws Exception;
-    public String getWhereClause(T dto) throws Exception;
-    public T setId(T dto, int id) throws Exception;
-    public String[] getFields() throws Exception;
-    public String getTableName() throws Exception;
+    T transform(Cursor cursor) throws Exception;
+    ContentValues transform(T dto) throws Exception;
+    String getWhereClause(T dto) throws Exception;
+    T setId(T dto, int id) throws Exception;
+    String[] getFields() throws Exception;
+    String getTableName() throws Exception;
 }

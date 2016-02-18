@@ -25,10 +25,10 @@ import java.util.Collection;
  */
 public interface DataAccesObject<T> {
     // CRUD
-    public T create(T dto) throws Exception;
-    public int update(T dto) throws Exception;
-    public T read(T dto) throws Exception;
-    public Collection<T> readAll() throws Exception;
-    public boolean delete(T dto) throws Exception;
-    public int deleteAll() throws Exception;
+    T create(T dto) throws Exception;
+    int update(T dto) throws Exception;
+    T read(T dto) throws Exception;
+    Collection<T> readAll() throws Exception;
+    boolean delete(T dto) throws Exception;
+    int deleteAll() throws Exception;
 }
